@@ -38,10 +38,10 @@
 
 # Initial variables
 
-wd = "~/R/Pest MS/"
-wdpng = "~/R/Pest MS/png"
-wddata = "~/R/Pest MS/data"
-wdfun = "~/R/Pest MS/functions"
+wd = "~/R/Pest-MS/"
+wdpng = "~/R/Pest-MS/png"
+wddata = "~/R/Pest-MS/data"
+wdfun = "~/R/Pest-MS/functions"
 
 # functions
 source(file.path(wdfun,"color bar.R"))
