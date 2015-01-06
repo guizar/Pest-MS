@@ -1,0 +1,27 @@
+Column,Description
+NAME, Country
+Region, Region
+Subregion, Subregion
+LAT, LAT
+LON, LON
+x2, phi 0.0001
+x3, phi 0.001
+x4, phi 0.01
+IPM, Insect Population Metabolism (change in pest pressure)
+IY, Impact Yield
+CY, Crop yield (tonnnes per hectare)
+CL, Crop loss (in tonnes per hectare of grid area).
+CGS, current growing season
+CA, Crop area LAT LONG and % of grid cell planted  
+CLF, Crop fractional loss due to pests currently (from...)
+MET, Impact Metabolism
+POP, Impact population
+AVG, "rowMeans(M,R,W)"
+AREA, cell area
+YLD_HA_x,YIELD PER HA PLANTED
+YLD_TOT_x, YIELD (tonnes) TOTAL PER CELL
+CL2050_xy, TOTAL TONNES LOST PER CELL DUE TO CLIMATE INDUCED CHANGES IN INSECT PESTS (CROP LOSS PER CELL- CL2050_xy)
+CYH_x,CURRENT CROP YIELD PER HA PLANTED
+FCY_xy,PROJECTED FUTURE CROP YIELD PER HA PLANTED
+IYCC_xy,YIELD LOSS DO TO CLIMATE CHANGE
+CELLS,?
