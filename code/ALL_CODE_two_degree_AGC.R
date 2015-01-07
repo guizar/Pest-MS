@@ -1,6 +1,7 @@
 #plenty of redundant packages loaded here, but I have not gone through and pruned the list yet. 
 
 # library(sciplot)
+
 # library(lme4)
 # library(bitops)
 # library(gtools)
