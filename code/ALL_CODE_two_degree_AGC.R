@@ -422,25 +422,66 @@ ALL$IYCC_W3<-ALL$IPM_W3*(ALL$CLF_W)
 ALL$IYCC_W4<-ALL$IPM_W4*(ALL$CLF_W)
 
 # Merge Country to region data -- MISSING CSV IN THIS SECTION
-setwd(wddata)
-C_TO_R<-data.frame(read.csv("COUNTRY_TO_REGION.csv", header=TRUE))
-ALL<-merge(C_TO_R,ALL,"NAME",all=TRUE,sort=TRUE)
-#add counting column
-ALL$CELLS<-1
+# setwd(wddata)
+# C_TO_R<-data.frame(read.csv("COUNTRY_TO_REGION.csv", header=TRUE))
+# ALL<-merge(C_TO_R,ALL,"NAME",all=TRUE,sort=TRUE)
+# #add counting column
+# ALL$CELLS<-1
+# ///////////////////
+
+
+# /////////////////// ADD UN REGIONS
+# not used anymore: unsub = read.csv("unsubregions2.csv",header = T, stringsAsFactor=F) -  data from Ahttp://unstats.un.org/unsd/methods/m49/m49regin.htm
+
+# load country regions and codes
+library(countrycode)
+data=countrycode_data
+
+# can they be simply merged?
+summary(ALL$NAME %in% unsub$NAME) ## too many missing countries
+summary(ALL$NAME %in% data$country.name) ## too many missing countries
+# looks better if you run countrycode()
+summary(is.na(countrycode(ALL$NAME,origin = "country.name",destination = "un")))
+summary(is.na(countrycode(unsub$NAME,origin = "country.name",destination = "un")))
+
+# add UN code number to ALL
+ALL$code = countrycode(ALL$NAME,origin = "country.name",destination = "un", warn = T)
+
+# add missing country code (to identify region)
+ALL$code[is.na(ALL$code)] = unique(ALL$code[ALL$NAME=="China"])
+# merge by UN code
+t = merge(ALL,data,by.x= "code",by.y = "un",all.x=T,sort=T)
+
+# are there any missing regions?
+summary(is.na(t$region)) # looks good to go
+unique(t$region)
+
+# correct country.name (Taiwan)
+t$country.name[t$NAME=="Taiwan"] ="Taiwan"
+
+# remove unused cols
+t = t[,-which(names(t) %in% c("cowc","cown","fao","fips104","imf","ioc","iso2c","iso3c","iso3n","un","wb","regex"))]
+
+# restore and remove
+ALL = t
+rm(t)
+# ///////////////////
+
 
 
 # /////////////////////// This is the master csv that will be used to produce the plots and tables
+
+# CUT ALL ROWS WITH NO LAT AND LONG
+summary(is.na(ALL$LAT))
+ALL<-subset(ALL,!is.na(ALL$LAT))
+
+setwd(wddata)
+
 # Write ALL
 write.table(ALL, file = "ALL.csv", sep = ",", col.names = NA)
 
 # Load ALL
 ALL<-read.csv("ALL.csv", header=TRUE,na.strings = c("#VALUE!", "#N/A", "N/A", "NA", ""))
-
-# CUT ALL ROWS WITH NO LAT AND LONG
-ALL<-subset(ALL,!is.na(ALL$LAT))
-
-# RE-Write ALL 
-write.table(ALL, file = "ALL.csv", sep = ",", col.names = NA)
 # ///////////////////////
 
 
