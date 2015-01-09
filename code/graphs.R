@@ -1,5 +1,7 @@
 # Load data and initial variables
 
+Hey alex, this is great.
+
 wd = "~/Google Drive/PROJ - Pest MS/"
 wdpng = "~/Google Drive/PROJ - Pest MS/png"
 wddata = "~/Google Drive/PROJ - Pest MS/data"
