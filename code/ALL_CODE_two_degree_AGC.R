@@ -438,11 +438,11 @@ library(countrycode)
 data=countrycode_data
 
 # can they be simply merged?
-summary(ALL$NAME %in% unsub$NAME) ## too many missing countries
 summary(ALL$NAME %in% data$country.name) ## too many missing countries
+
 # looks better if you run countrycode()
 summary(is.na(countrycode(ALL$NAME,origin = "country.name",destination = "un")))
-summary(is.na(countrycode(unsub$NAME,origin = "country.name",destination = "un")))
+
 
 # add UN code number to ALL
 ALL$code = countrycode(ALL$NAME,origin = "country.name",destination = "un", warn = T)
