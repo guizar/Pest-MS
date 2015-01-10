@@ -1,0 +1,541 @@
+"","region","crop","phi","fact","value"
+"1","Australia and New Zealand","M",2,"IPM",0.172179880526316
+"2","Australia and New Zealand","M",2,"MET",0.167879015087719
+"3","Australia and New Zealand","M",2,"POP",0.0038335487524386
+"4","Australia and New Zealand","M",3,"IPM",0.169046537192982
+"5","Australia and New Zealand","M",3,"MET",0.167879015087719
+"6","Australia and New Zealand","M",3,"POP",0.00132366988070175
+"7","Australia and New Zealand","M",4,"IPM",0.164458788947368
+"8","Australia and New Zealand","M",4,"MET",0.167879015087719
+"9","Australia and New Zealand","M",4,"POP",-0.00234816540175439
+"10","Australia and New Zealand","R",2,"IPM",0.21166732
+"11","Australia and New Zealand","R",2,"MET",0.1953765235
+"12","Australia and New Zealand","R",2,"POP",0.01357202198
+"13","Australia and New Zealand","R",3,"IPM",0.2150871335
+"14","Australia and New Zealand","R",3,"MET",0.1953765235
+"15","Australia and New Zealand","R",3,"POP",0.016469753115
+"16","Australia and New Zealand","R",4,"IPM",0.220302565
+"17","Australia and New Zealand","R",4,"MET",0.1953765235
+"18","Australia and New Zealand","R",4,"POP",0.020886746732
+"19","Australia and New Zealand","W",2,"IPM",0.190899331923077
+"20","Australia and New Zealand","W",2,"MET",0.149834501858974
+"21","Australia and New Zealand","W",2,"POP",0.0352663863333333
+"22","Australia and New Zealand","W",3,"IPM",0.230898524487179
+"23","Australia and New Zealand","W",3,"MET",0.149834501858974
+"24","Australia and New Zealand","W",3,"POP",0.0696262961230769
+"25","Australia and New Zealand","W",4,"IPM",0.309604033974359
+"26","Australia and New Zealand","W",4,"MET",0.149834501858974
+"27","Australia and New Zealand","W",4,"POP",0.137337321071795
+"28","Caribbean","M",2,"IPM",0.100075792636364
+"29","Caribbean","M",2,"MET",0.140262974545455
+"30","Caribbean","M",2,"POP",-0.0350769135454545
+"31","Caribbean","M",3,"IPM",0.0628504761363636
+"32","Caribbean","M",3,"MET",0.140262974545455
+"33","Caribbean","M",3,"POP",-0.0675730367272727
+"34","Caribbean","M",4,"IPM",-0.00283076397272727
+"35","Caribbean","M",4,"MET",0.140262974545455
+"36","Caribbean","M",4,"POP",-0.124944564909091
+"37","Caribbean","R",2,"IPM",0.118573010454545
+"38","Caribbean","R",2,"MET",0.144950395454545
+"39","Caribbean","R",2,"POP",-0.0228847279909091
+"40","Caribbean","R",3,"IPM",0.0990185857272727
+"41","Caribbean","R",3,"MET",0.144950395454545
+"42","Caribbean","R",3,"POP",-0.0398430066281818
+"43","Caribbean","R",4,"IPM",0.0723118920272727
+"44","Caribbean","R",4,"MET",0.144950395454545
+"45","Caribbean","R",4,"POP",-0.0630098375181818
+"46","Caribbean","W",2,"IPM",NA
+"47","Caribbean","W",2,"MET",NA
+"48","Caribbean","W",2,"POP",NA
+"49","Caribbean","W",3,"IPM",NA
+"50","Caribbean","W",3,"MET",NA
+"51","Caribbean","W",3,"POP",NA
+"52","Caribbean","W",4,"IPM",NA
+"53","Caribbean","W",4,"MET",NA
+"54","Caribbean","W",4,"POP",NA
+"55","Central America","M",2,"IPM",0.190129210339869
+"56","Central America","M",2,"MET",0.183948325163399
+"57","Central America","M",2,"POP",0.00458736267367124
+"58","Central America","M",3,"IPM",0.261044991254902
+"59","Central America","M",3,"MET",0.183948325163399
+"60","Central America","M",3,"POP",0.0619571793679739
+"61","Central America","M",4,"IPM",1.47489133438584
+"62","Central America","M",4,"MET",0.183948325163399
+"63","Central America","M",4,"POP",86.1197484667005
+"64","Central America","R",2,"IPM",0.133615873587302
+"65","Central America","R",2,"MET",0.180225574285714
+"66","Central America","R",2,"POP",-0.0389931463587302
+"67","Central America","R",3,"IPM",0.112738750095238
+"68","Central America","R",3,"MET",0.180225574285714
+"69","Central America","R",3,"POP",-0.056350906068254
+"70","Central America","R",4,"IPM",0.0827339938333333
+"71","Central America","R",4,"MET",0.180225574285714
+"72","Central America","R",4,"POP",-0.081281248647619
+"73","Central America","W",2,"IPM",0.187051835164835
+"74","Central America","W",2,"MET",0.186416757582418
+"75","Central America","W",2,"POP",0.000453693810153846
+"76","Central America","W",3,"IPM",0.188970022857143
+"77","Central America","W",3,"MET",0.186416757582418
+"78","Central America","W",3,"POP",0.00199851837153846
+"79","Central America","W",4,"IPM",0.192484806153846
+"80","Central America","W",4,"MET",0.186416757582418
+"81","Central America","W",4,"POP",0.00484035824901099
+"82","Central Asia","M",2,"IPM",0.223968207594937
+"83","Central Asia","M",2,"MET",0.223821503670886
+"84","Central Asia","M",2,"POP",0.000646108508734178
+"85","Central Asia","M",3,"IPM",0.183075047797468
+"86","Central Asia","M",3,"MET",0.223821503670886
+"87","Central Asia","M",3,"POP",-0.0317173261329114
+"88","Central Asia","M",4,"IPM",-0.0233045587101266
+"89","Central Asia","M",4,"MET",0.223821503670886
+"90","Central Asia","M",4,"POP",-0.196696860605063
+"91","Central Asia","R",2,"IPM",0.299828472692308
+"92","Central Asia","R",2,"MET",0.261449611153846
+"93","Central Asia","R",2,"POP",0.0299988326655769
+"94","Central Asia","R",3,"IPM",0.362995530192308
+"95","Central Asia","R",3,"MET",0.261449611153846
+"96","Central Asia","R",3,"POP",0.0791705296153846
+"97","Central Asia","R",4,"IPM",1.26440164919683
+"98","Central Asia","R",4,"MET",0.261449611153846
+"99","Central Asia","R",4,"POP",5.29023724597885
+"100","Central Asia","W",2,"IPM",0.289170676239316
+"101","Central Asia","W",2,"MET",0.232942731452991
+"102","Central Asia","W",2,"POP",0.0449449685470085
+"103","Central Asia","W",3,"IPM",0.320777306324786
+"104","Central Asia","W",3,"MET",0.232942731452991
+"105","Central Asia","W",3,"POP",0.0701661392051282
+"106","Central Asia","W",4,"IPM",0.390187235726496
+"107","Central Asia","W",4,"MET",0.232942731452991
+"108","Central Asia","W",4,"POP",0.125623104119658
+"109","Eastern Africa","M",2,"IPM",0.163597599911111
+"110","Eastern Africa","M",2,"MET",0.183880154222222
+"111","Eastern Africa","M",2,"POP",-0.0167589631482267
+"112","Eastern Africa","M",3,"IPM",0.147979887973333
+"113","Eastern Africa","M",3,"MET",0.183880154222222
+"114","Eastern Africa","M",3,"POP",-0.0296697599043111
+"115","Eastern Africa","M",4,"IPM",0.125581723548444
+"116","Eastern Africa","M",4,"MET",0.183880154222222
+"117","Eastern Africa","M",4,"POP",-0.0481949964726222
+"118","Eastern Africa","R",2,"IPM",0.159322104028571
+"119","Eastern Africa","R",2,"MET",0.189960341809524
+"120","Eastern Africa","R",2,"POP",-0.0251680512720476
+"121","Eastern Africa","R",3,"IPM",0.131558286164762
+"122","Eastern Africa","R",3,"MET",0.189960341809524
+"123","Eastern Africa","R",3,"POP",-0.0479674473730952
+"124","Eastern Africa","R",4,"IPM",0.075412406352381
+"125","Eastern Africa","R",4,"MET",0.189960341809524
+"126","Eastern Africa","R",4,"POP",-0.0941573004611905
+"127","Eastern Africa","W",2,"IPM",0.169458788193833
+"128","Eastern Africa","W",2,"MET",0.177374619779736
+"129","Eastern Africa","W",2,"POP",-0.00661204135079736
+"130","Eastern Africa","W",3,"IPM",0.165409759251101
+"131","Eastern Africa","W",3,"MET",0.177374619779736
+"132","Eastern Africa","W",3,"POP",-0.00997709304962996
+"133","Eastern Africa","W",4,"IPM",0.160361986039648
+"134","Eastern Africa","W",4,"MET",0.177374619779736
+"135","Eastern Africa","W",4,"POP",-0.0141742689273612
+"136","Eastern Asia","M",2,"IPM",0.229013270800712
+"137","Eastern Asia","M",2,"MET",0.186783900338078
+"138","Eastern Asia","M",2,"POP",0.0358398268114057
+"139","Eastern Asia","M",3,"IPM",0.271739147688612
+"140","Eastern Asia","M",3,"MET",0.186783900338078
+"141","Eastern Asia","M",3,"POP",0.0718530962186726
+"142","Eastern Asia","M",4,"IPM",0.669839431489126
+"143","Eastern Asia","M",4,"MET",0.186783900338078
+"144","Eastern Asia","M",4,"POP",10.5003328377185
+"145","Eastern Asia","R",2,"IPM",0.248970634472574
+"146","Eastern Asia","R",2,"MET",0.199581191033755
+"147","Eastern Asia","R",2,"POP",0.0413133841579536
+"148","Eastern Asia","R",3,"IPM",0.286837912386448
+"149","Eastern Asia","R",3,"MET",0.199581191033755
+"150","Eastern Asia","R",3,"POP",0.144057827350422
+"151","Eastern Asia","R",4,"IPM",0.414771261749404
+"152","Eastern Asia","R",4,"MET",0.199581191033755
+"153","Eastern Asia","R",4,"POP",0.296597856806013
+"154","Eastern Asia","W",2,"IPM",0.27278580025
+"155","Eastern Asia","W",2,"MET",0.192550065029412
+"156","Eastern Asia","W",2,"POP",0.0666315830913088
+"157","Eastern Asia","W",3,"IPM",0.613888012988588
+"158","Eastern Asia","W",3,"MET",0.192550065029412
+"159","Eastern Asia","W",3,"POP",13.4816678250615
+"160","Eastern Asia","W",4,"IPM",3.12090416217346
+"161","Eastern Asia","W",4,"MET",0.192550065029412
+"162","Eastern Asia","W",4,"POP",93.8814122859968
+"163","Eastern Europe","M",2,"IPM",0.256908253898635
+"164","Eastern Europe","M",2,"MET",0.214576696296296
+"165","Eastern Europe","M",2,"POP",0.0351651644922612
+"166","Eastern Europe","M",3,"IPM",0.271258506764133
+"167","Eastern Europe","M",3,"MET",0.214576696296296
+"168","Eastern Europe","M",3,"POP",0.0472346569158616
+"169","Eastern Europe","M",4,"IPM",0.305421175530214
+"170","Eastern Europe","M",4,"MET",0.214576696296296
+"171","Eastern Europe","M",4,"POP",0.0757614806794932
+"172","Eastern Europe","R",2,"IPM",0.273995487596154
+"173","Eastern Europe","R",2,"MET",0.245639704519231
+"174","Eastern Europe","R",2,"POP",0.0238234306570192
+"175","Eastern Europe","R",3,"IPM",0.282403475384615
+"176","Eastern Europe","R",3,"MET",0.245639704519231
+"177","Eastern Europe","R",3,"POP",0.0318617274557692
+"178","Eastern Europe","R",4,"IPM",0.660030770270636
+"179","Eastern Europe","R",4,"MET",0.245639704519231
+"180","Eastern Europe","R",4,"POP",27.1436973928087
+"181","Eastern Europe","W",2,"IPM",0.289403843571429
+"182","Eastern Europe","W",2,"MET",0.225122944623016
+"183","Eastern Europe","W",2,"POP",0.0522408210367063
+"184","Eastern Europe","W",3,"IPM",0.485068341686508
+"185","Eastern Europe","W",3,"MET",0.225122944623016
+"186","Eastern Europe","W",3,"POP",13.0444669148034
+"187","Eastern Europe","W",4,"IPM",0.703087960238095
+"188","Eastern Europe","W",4,"MET",0.225122944623016
+"189","Eastern Europe","W",4,"POP",21.4219272450196
+"190","Melanesia","M",2,"IPM",0.116703443166667
+"191","Melanesia","M",2,"MET",0.1334793575
+"192","Melanesia","M",2,"POP",-0.014877396625
+"193","Melanesia","M",3,"IPM",0.563666612862962
+"194","Melanesia","M",3,"MET",0.1334793575
+"195","Melanesia","M",3,"POP",24.0204126890417
+"196","Melanesia","M",4,"IPM",1.40322950429305
+"197","Melanesia","M",4,"MET",0.1334793575
+"198","Melanesia","M",4,"POP",74.4540766965417
+"199","Melanesia","R",2,"IPM",0.126694649116667
+"200","Melanesia","R",2,"MET",0.141594435833333
+"201","Melanesia","R",2,"POP",-0.0132411888541667
+"202","Melanesia","R",3,"IPM",0.341594901333333
+"203","Melanesia","R",3,"MET",0.141594435833333
+"204","Melanesia","R",3,"POP",0.166375158125
+"205","Melanesia","R",4,"IPM",0.486114155333333
+"206","Melanesia","R",4,"MET",0.141594435833333
+"207","Melanesia","R",4,"POP",0.29082469225
+"208","Melanesia","W",2,"IPM",NA
+"209","Melanesia","W",2,"MET",NA
+"210","Melanesia","W",2,"POP",NA
+"211","Melanesia","W",3,"IPM",NA
+"212","Melanesia","W",3,"MET",NA
+"213","Melanesia","W",3,"POP",NA
+"214","Melanesia","W",4,"IPM",NA
+"215","Melanesia","W",4,"MET",NA
+"216","Melanesia","W",4,"POP",NA
+"217","Middle Africa","M",2,"IPM",0.16804244465641
+"218","Middle Africa","M",2,"MET",0.191983945076923
+"219","Middle Africa","M",2,"POP",-0.0198366104245128
+"220","Middle Africa","M",3,"IPM",0.150559326061538
+"221","Middle Africa","M",3,"MET",0.191983945076923
+"222","Middle Africa","M",3,"POP",-0.0343056161753846
+"223","Middle Africa","M",4,"IPM",0.124275361752103
+"224","Middle Africa","M",4,"MET",0.191983945076923
+"225","Middle Africa","M",4,"POP",-0.0560589811979487
+"226","Middle Africa","R",2,"IPM",0.154753294091954
+"227","Middle Africa","R",2,"MET",0.188111585804598
+"228","Middle Africa","R",2,"POP",-0.0278245417
+"229","Middle Africa","R",3,"IPM",0.12858795116092
+"230","Middle Africa","R",3,"MET",0.188111585804598
+"231","Middle Africa","R",3,"POP",-0.0496241342092529
+"232","Middle Africa","R",4,"IPM",0.0886834431552874
+"233","Middle Africa","R",4,"MET",0.188111585804598
+"234","Middle Africa","R",4,"POP",-0.082902862457069
+"235","Middle Africa","W",2,"IPM",0.179414365403727
+"236","Middle Africa","W",2,"MET",0.191077908074534
+"237","Middle Africa","W",2,"POP",-0.00973125325919255
+"238","Middle Africa","W",3,"IPM",0.173184386335404
+"239","Middle Africa","W",3,"MET",0.191077908074534
+"240","Middle Africa","W",3,"POP",-0.0149258199528634
+"241","Middle Africa","W",4,"IPM",0.165675212428571
+"242","Middle Africa","W",4,"MET",0.191077908074534
+"243","Middle Africa","W",4,"POP",-0.0211861610314286
+"244","Northern Africa","M",2,"IPM",0.209075166375
+"245","Northern Africa","M",2,"MET",0.21512149625
+"246","Northern Africa","M",2,"POP",-0.0044821157755
+"247","Northern Africa","M",3,"IPM",0.20686001425
+"248","Northern Africa","M",3,"MET",0.21512149625
+"249","Northern Africa","M",3,"POP",-0.00593623996425
+"250","Northern Africa","M",4,"IPM",0.2088396571375
+"251","Northern Africa","M",4,"MET",0.21512149625
+"252","Northern Africa","M",4,"POP",-0.003875454587875
+"253","Northern Africa","R",2,"IPM",0.200337110246914
+"254","Northern Africa","R",2,"MET",0.21820862962963
+"255","Northern Africa","R",2,"POP",-0.0142356679366667
+"256","Northern Africa","R",3,"IPM",0.185665324716049
+"257","Northern Africa","R",3,"MET",0.21820862962963
+"258","Northern Africa","R",3,"POP",-0.0259305004350617
+"259","Northern Africa","R",4,"IPM",0.16392003617284
+"260","Northern Africa","R",4,"MET",0.21820862962963
+"261","Northern Africa","R",4,"POP",-0.0432710046753086
+"262","Northern Africa","W",2,"IPM",0.2117942922
+"263","Northern Africa","W",2,"MET",0.198535768
+"264","Northern Africa","W",2,"POP",0.0108953829504
+"265","Northern Africa","W",3,"IPM",0.223446605
+"266","Northern Africa","W",3,"MET",0.198535768
+"267","Northern Africa","W",3,"POP",0.0204649328068
+"268","Northern Africa","W",4,"IPM",0.2447206586
+"269","Northern Africa","W",4,"MET",0.198535768
+"270","Northern Africa","W",4,"POP",0.0379094479606
+"271","Northern America","M",2,"IPM",0.266402313109091
+"272","Northern America","M",2,"MET",0.234179203254545
+"273","Northern America","M",2,"POP",0.0260100112692084
+"274","Northern America","M",3,"IPM",0.279043401054545
+"275","Northern America","M",3,"MET",0.234179203254545
+"276","Northern America","M",3,"POP",0.0363196917580182
+"277","Northern America","M",4,"IPM",0.309024095272727
+"278","Northern America","M",4,"MET",0.234179203254545
+"279","Northern America","M",4,"POP",0.0606497759804909
+"280","Northern America","R",2,"IPM",0.237289433157895
+"281","Northern America","R",2,"MET",0.232563736842105
+"282","Northern America","R",2,"POP",0.00502959168315789
+"283","Northern America","R",3,"IPM",0.234086453157895
+"284","Northern America","R",3,"MET",0.232563736842105
+"285","Northern America","R",3,"POP",0.00328400452105263
+"286","Northern America","R",4,"IPM",0.235910127368421
+"287","Northern America","R",4,"MET",0.232563736842105
+"288","Northern America","R",4,"POP",0.00590985689473684
+"289","Northern America","W",2,"IPM",0.256797050532446
+"290","Northern America","W",2,"MET",0.212017897171381
+"291","Northern America","W",2,"POP",0.0364154496700532
+"292","Northern America","W",3,"IPM",0.293303571281198
+"293","Northern America","W",3,"MET",0.212017897171381
+"294","Northern America","W",3,"POP",0.0660667423664176
+"295","Northern America","W",4,"IPM",0.487354719656129
+"296","Northern America","W",4,"MET",0.212017897171381
+"297","Northern America","W",4,"POP",3.87690235863233
+"298","Northern Europe","M",2,"IPM",NA
+"299","Northern Europe","M",2,"MET",NA
+"300","Northern Europe","M",2,"POP",NA
+"301","Northern Europe","M",3,"IPM",NA
+"302","Northern Europe","M",3,"MET",NA
+"303","Northern Europe","M",3,"POP",NA
+"304","Northern Europe","M",4,"IPM",NA
+"305","Northern Europe","M",4,"MET",NA
+"306","Northern Europe","M",4,"POP",NA
+"307","Northern Europe","R",2,"IPM",NA
+"308","Northern Europe","R",2,"MET",NA
+"309","Northern Europe","R",2,"POP",NA
+"310","Northern Europe","R",3,"IPM",NA
+"311","Northern Europe","R",3,"MET",NA
+"312","Northern Europe","R",3,"POP",NA
+"313","Northern Europe","R",4,"IPM",NA
+"314","Northern Europe","R",4,"MET",NA
+"315","Northern Europe","R",4,"POP",NA
+"316","Northern Europe","W",2,"IPM",0.222856215409836
+"317","Northern Europe","W",2,"MET",0.18104397295082
+"318","Northern Europe","W",2,"POP",0.0348663407918033
+"319","Northern Europe","W",3,"IPM",0.246779173770492
+"320","Northern Europe","W",3,"MET",0.18104397295082
+"321","Northern Europe","W",3,"POP",0.054872390852459
+"322","Northern Europe","W",4,"IPM",0.294936619180328
+"323","Northern Europe","W",4,"MET",0.18104397295082
+"324","Northern Europe","W",4,"POP",0.0952145106557377
+"325","South America","M",2,"IPM",0.119486951977146
+"326","South America","M",2,"MET",0.172076570440977
+"327","South America","M",2,"POP",-0.0434235645135821
+"328","South America","M",3,"IPM",0.0336712926377309
+"329","South America","M",3,"MET",0.172076570440977
+"330","South America","M",3,"POP",0.35944459188867
+"331","South America","M",4,"IPM",-0.0613177557884282
+"332","South America","M",4,"MET",0.172076570440977
+"333","South America","M",4,"POP",0.752759115492619
+"334","South America","R",2,"IPM",0.143718967297686
+"335","South America","R",2,"MET",0.180035966099174
+"336","South America","R",2,"POP",-0.0301042058612909
+"337","South America","R",3,"IPM",0.156667272965158
+"338","South America","R",3,"MET",0.180035966099174
+"339","South America","R",3,"POP",0.276239464812446
+"340","South America","R",4,"IPM",0.135962708718676
+"341","South America","R",4,"MET",0.180035966099174
+"342","South America","R",4,"POP",1.46247011495175
+"343","South America","W",2,"IPM",0.159774146750605
+"344","South America","W",2,"MET",0.169420464210654
+"345","South America","W",2,"POP",-0.00793656668263826
+"346","South America","W",3,"IPM",0.153955396229056
+"347","South America","W",3,"MET",0.169420464210654
+"348","South America","W",3,"POP",-0.0127081644638935
+"349","South America","W",4,"IPM",0.1699342425723
+"350","South America","W",4,"MET",0.169420464210654
+"351","South America","W",4,"POP",0.10237154552563
+"352","South-Eastern Asia","M",2,"IPM",0.142367905758278
+"353","South-Eastern Asia","M",2,"MET",0.157421985231788
+"354","South-Eastern Asia","M",2,"POP",-0.0129938940513609
+"355","South-Eastern Asia","M",3,"IPM",0.163854240523899
+"356","South-Eastern Asia","M",3,"MET",0.157421985231788
+"357","South-Eastern Asia","M",3,"POP",3.90038254052668
+"358","South-Eastern Asia","M",4,"IPM",0.21741927804476
+"359","South-Eastern Asia","M",4,"MET",0.157421985231788
+"360","South-Eastern Asia","M",4,"POP",10.3133068742722
+"361","South-Eastern Asia","R",2,"IPM",0.141855429918567
+"362","South-Eastern Asia","R",2,"MET",0.154242060944625
+"363","South-Eastern Asia","R",2,"POP",-0.0107390119778827
+"364","South-Eastern Asia","R",3,"IPM",0.133954409582085
+"365","South-Eastern Asia","R",3,"MET",0.154242060944625
+"366","South-Eastern Asia","R",3,"POP",-0.0175822543163518
+"367","South-Eastern Asia","R",4,"IPM",0.122643805707166
+"368","South-Eastern Asia","R",4,"MET",0.154242060944625
+"369","South-Eastern Asia","R",4,"POP",-0.0273776357229088
+"370","South-Eastern Asia","W",2,"IPM",0.170958940574713
+"371","South-Eastern Asia","W",2,"MET",0.166717119655172
+"372","South-Eastern Asia","W",2,"POP",0.00357761354011494
+"373","South-Eastern Asia","W",3,"IPM",0.175033638390805
+"374","South-Eastern Asia","W",3,"MET",0.166717119655172
+"375","South-Eastern Asia","W",3,"POP",0.00701513605490805
+"376","South-Eastern Asia","W",4,"IPM",0.181142243448276
+"377","South-Eastern Asia","W",4,"MET",0.166717119655172
+"378","South-Eastern Asia","W",4,"POP",0.0121467605034054
+"379","Southern Africa","M",2,"IPM",0.250067568710059
+"380","Southern Africa","M",2,"MET",0.190468091
+"381","Southern Africa","M",2,"POP",1.10150147320292
+"382","Southern Africa","M",3,"IPM",0.310756578804734
+"383","Southern Africa","M",3,"MET",0.190468091
+"384","Southern Africa","M",3,"POP",5.70547020296815
+"385","Southern Africa","M",4,"IPM",0.357068515745562
+"386","Southern Africa","M",4,"MET",0.190468091
+"387","Southern Africa","M",4,"POP",12.1187605186113
+"388","Southern Africa","R",2,"IPM",0.186546484285714
+"389","Southern Africa","R",2,"MET",0.194856308
+"390","Southern Africa","R",2,"POP",-0.00684034980085714
+"391","Southern Africa","R",3,"IPM",0.176274383357143
+"392","Southern Africa","R",3,"MET",0.194856308
+"393","Southern Africa","R",3,"POP",-0.0153206646952857
+"394","Southern Africa","R",4,"IPM",0.162571559942857
+"395","Southern Africa","R",4,"MET",0.194856308
+"396","Southern Africa","R",4,"POP",-0.0266402615532857
+"397","Southern Africa","W",2,"IPM",0.194925994065934
+"398","Southern Africa","W",2,"MET",0.192185519010989
+"399","Southern Africa","W",2,"POP",0.0023270081946044
+"400","Southern Africa","W",3,"IPM",0.19899863032967
+"401","Southern Africa","W",3,"MET",0.192185519010989
+"402","Southern Africa","W",3,"POP",0.00575122641373626
+"403","Southern Africa","W",4,"IPM",0.204252462637363
+"404","Southern Africa","W",4,"MET",0.192185519010989
+"405","Southern Africa","W",4,"POP",0.0101694380333516
+"406","Southern Asia","M",2,"IPM",0.235646124501955
+"407","Southern Asia","M",2,"MET",0.186837878792271
+"408","Southern Asia","M",2,"POP",0.0674441969335072
+"409","Southern Asia","M",3,"IPM",0.25743864981838
+"410","Southern Asia","M",3,"MET",0.186837878792271
+"411","Southern Asia","M",3,"POP",0.0858044948479952
+"412","Southern Asia","M",4,"IPM",0.540810099354881
+"413","Southern Asia","M",4,"MET",0.186837878792271
+"414","Southern Asia","M",4,"POP",10.0547715974542
+"415","Southern Asia","R",2,"IPM",0.227992349447368
+"416","Southern Asia","R",2,"MET",0.196967184868421
+"417","Southern Asia","R",2,"POP",0.0255177220922082
+"418","Southern Asia","R",3,"IPM",0.247757550921053
+"419","Southern Asia","R",3,"MET",0.196967184868421
+"420","Southern Asia","R",3,"POP",0.0418826780585263
+"421","Southern Asia","R",4,"IPM",0.40953665801462
+"422","Southern Asia","R",4,"MET",0.196967184868421
+"423","Southern Asia","R",4,"POP",7.66343242379284
+"424","Southern Asia","W",2,"IPM",0.216211673607427
+"425","Southern Asia","W",2,"MET",0.189920808435013
+"426","Southern Asia","W",2,"POP",0.0215172446393448
+"427","Southern Asia","W",3,"IPM",0.27307763370216
+"428","Southern Asia","W",3,"MET",0.189920808435013
+"429","Southern Asia","W",3,"POP",0.481153201134907
+"430","Southern Asia","W",4,"IPM",0.535288985543767
+"431","Southern Asia","W",4,"MET",0.189920808435013
+"432","Southern Asia","W",4,"POP",4.41311905355593
+"433","Southern Europe","M",2,"IPM",0.255941313627451
+"434","Southern Europe","M",2,"MET",0.242593593529412
+"435","Southern Europe","M",2,"POP",0.0108953419205196
+"436","Southern Europe","M",3,"IPM",0.25277918245098
+"437","Southern Europe","M",3,"MET",0.242593593529412
+"438","Southern Europe","M",3,"POP",0.00860035666990196
+"439","Southern Europe","M",4,"IPM",0.246504754313725
+"440","Southern Europe","M",4,"MET",0.242593593529412
+"441","Southern Europe","M",4,"POP",0.0039916294547549
+"442","Southern Europe","R",2,"IPM",0.253746779019608
+"443","Southern Europe","R",2,"MET",0.245340009607843
+"444","Southern Europe","R",2,"POP",0.00719110363962745
+"445","Southern Europe","R",3,"IPM",0.242157197254902
+"446","Southern Europe","R",3,"MET",0.245340009607843
+"447","Southern Europe","R",3,"POP",-0.00138841789509804
+"448","Southern Europe","R",4,"IPM",0.16727358145098
+"449","Southern Europe","R",4,"MET",0.245340009607843
+"450","Southern Europe","R",4,"POP",-0.0595139232180392
+"451","Southern Europe","W",2,"IPM",0.249969024019608
+"452","Southern Europe","W",2,"MET",0.207713972647059
+"453","Southern Europe","W",2,"POP",0.0345822491735294
+"454","Southern Europe","W",3,"IPM",0.287071406372549
+"455","Southern Europe","W",3,"MET",0.207713972647059
+"456","Southern Europe","W",3,"POP",0.0649208281039216
+"457","Southern Europe","W",4,"IPM",0.377807369411765
+"458","Southern Europe","W",4,"MET",0.207713972647059
+"459","Southern Europe","W",4,"POP",0.139025939343137
+"460","Western Africa","M",2,"IPM",0.201079156717949
+"461","Western Africa","M",2,"MET",0.193042615230769
+"462","Western Africa","M",2,"POP",0.00677046614712821
+"463","Western Africa","M",3,"IPM",0.208783650671795
+"464","Western Africa","M",3,"MET",0.193042615230769
+"465","Western Africa","M",3,"POP",0.0132614678452308
+"466","Western Africa","M",4,"IPM",0.220367661331282
+"467","Western Africa","M",4,"MET",0.193042615230769
+"468","Western Africa","M",4,"POP",0.0230250785412821
+"469","Western Africa","R",2,"IPM",0.197923070292398
+"470","Western Africa","R",2,"MET",0.193658180409357
+"471","Western Africa","R",2,"POP",0.00359810895838012
+"472","Western Africa","R",3,"IPM",0.202136224269006
+"473","Western Africa","R",3,"MET",0.193658180409357
+"474","Western Africa","R",3,"POP",0.00715573449298246
+"475","Western Africa","R",4,"IPM",0.207581097795322
+"476","Western Africa","R",4,"MET",0.193658180409357
+"477","Western Africa","R",4,"POP",0.0117589941118129
+"478","Western Africa","W",2,"IPM",0.19172628987013
+"479","Western Africa","W",2,"MET",0.189322338311688
+"480","Western Africa","W",2,"POP",0.00199779284818182
+"481","Western Africa","W",3,"IPM",0.193941213636364
+"482","Western Africa","W",3,"MET",0.189322338311688
+"483","Western Africa","W",3,"POP",0.00384028768483117
+"484","Western Africa","W",4,"IPM",0.196501852987013
+"485","Western Africa","W",4,"MET",0.189322338311688
+"486","Western Africa","W",4,"POP",0.0059703804314026
+"487","Western Asia","M",2,"IPM",0.270377521578947
+"488","Western Asia","M",2,"MET",0.266202345368421
+"489","Western Asia","M",2,"POP",0.00412568520157895
+"490","Western Asia","M",3,"IPM",0.254572318905263
+"491","Western Asia","M",3,"MET",0.266202345368421
+"492","Western Asia","M",3,"POP",-0.007177568976
+"493","Western Asia","M",4,"IPM",0.189906106726316
+"494","Western Asia","M",4,"MET",0.266202345368421
+"495","Western Asia","M",4,"POP",-0.0561865334505263
+"496","Western Asia","R",2,"IPM",0.276430552727273
+"497","Western Asia","R",2,"MET",0.264690177727273
+"498","Western Asia","R",2,"POP",0.00915610289613636
+"499","Western Asia","R",3,"IPM",0.270674764772727
+"500","Western Asia","R",3,"MET",0.264690177727273
+"501","Western Asia","R",3,"POP",0.00461211973159091
+"502","Western Asia","R",4,"IPM",0.269125589840909
+"503","Western Asia","R",4,"MET",0.264690177727273
+"504","Western Asia","R",4,"POP",0.00318813697272727
+"505","Western Asia","W",2,"IPM",0.2911388532
+"506","Western Asia","W",2,"MET",0.227020389
+"507","Western Asia","W",2,"POP",0.051793382025
+"508","Western Asia","W",3,"IPM",0.3722298582
+"509","Western Asia","W",3,"MET",0.227020389
+"510","Western Asia","W",3,"POP",0.117190699979
+"511","Western Asia","W",4,"IPM",1.38064557893333
+"512","Western Asia","W",4,"MET",0.227020389
+"513","Western Asia","W",4,"POP",45.002714731433
+"514","Western Europe","M",2,"IPM",0.221176512307692
+"515","Western Europe","M",2,"MET",0.210283954134615
+"516","Western Europe","M",2,"POP",0.00946895284509615
+"517","Western Europe","M",3,"IPM",0.215831544615385
+"518","Western Europe","M",3,"MET",0.210283954134615
+"519","Western Europe","M",3,"POP",0.00550502379826923
+"520","Western Europe","M",4,"IPM",0.20765389625
+"521","Western Europe","M",4,"MET",0.210283954134615
+"522","Western Europe","M",4,"POP",-0.000544555158365384
+"523","Western Europe","R",2,"IPM",0.2665013525
+"524","Western Europe","R",2,"MET",0.2633065325
+"525","Western Europe","R",2,"POP",0.0028910730825
+"526","Western Europe","R",3,"IPM",0.25690135
+"527","Western Europe","R",3,"MET",0.2633065325
+"528","Western Europe","R",3,"POP",-0.004289003575
+"529","Western Europe","R",4,"IPM",0.242236545
+"530","Western Europe","R",4,"MET",0.2633065325
+"531","Western Europe","R",4,"POP",-0.0152313224
+"532","Western Europe","W",2,"IPM",0.216633417169811
+"533","Western Europe","W",2,"MET",0.189876332264151
+"534","Western Europe","W",2,"POP",0.0225377973377358
+"535","Western Europe","W",3,"IPM",0.233761812830189
+"536","Western Europe","W",3,"MET",0.189876332264151
+"537","Western Europe","W",3,"POP",0.0369812896603774
+"538","Western Europe","W",4,"IPM",0.269255788679245
+"539","Western Europe","W",4,"MET",0.189876332264151
+"540","Western Europe","W",4,"POP",0.0668436547735849

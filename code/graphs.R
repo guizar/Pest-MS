@@ -84,7 +84,10 @@ m1
 # m1
 # dev.off()
 
+# -------
 # Fig 1b) 3 adjacent panels indicating phi values per UN region
+
+
 fg1b = ALL[,c("region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
 
 
@@ -114,14 +117,18 @@ rm(t)
 rm(c2)
 rm(c1)
 
-# b) Summarize and prepare data for ggplot:
-
-# sumarize
+# b) Summarize 
 library(plyr)
 fg1b = ddply(fg1b, c("region","crop","phi","fact"), summarise,value  = mean(value, na.rm=T))
 
-# change colnames
+# save data summary
+write.csv(fg1b, file.path(wddata,"summary.csv"))
+
+# c) prepare for plotting
+# change form long to wide (crteate columns for each phi)
 fg1b = dcast(fg1b, region + crop + fact ~ phi, value.var="value")
+
+# change colnames
 names(fg1b)[names(fg1b)=="2"] <- "phi2"
 names(fg1b)[names(fg1b)=="3"] <- "phi3"
 names(fg1b)[names(fg1b)=="4"] <- "phi4"
@@ -144,7 +151,7 @@ p = ggplot(fg1b, aes(x = region, y = value)) + geom_boxplot()
 p = p + coord_flip()
 p = p + facet_grid(fact~crop) 
 p = p + ylim(ymin=0, ymax=0.5)
-p = p + xlab(label = "") + ylab(label = "Phi range") 
+p = p + xlab(label = "") + ylab(label = "Fractional change") 
 p
 
 # Save plot
@@ -154,12 +161,134 @@ png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
 p
 dev.off()
 
-## MISSING: ALLGIN fg1 (maps) and fg1b
-
+# pending: Align fg1 (maps) and fg1b
 # //////////////////////// 
 
 
-# //////////////////////// 
+# ////////////////////////  Figure 2) 
+library("R.matlab")
+library("arrayhelpers")
+
+setwd(wddata)
+data = readMat("MS_Fig2.mat")
+
+#### Data composition
+# x2 = temp anomaly
+# y2 = yield loss
+#
+# [1:4] = GFDL, MPI, IPSL, Hadley
+# [1:3] = Wheat, Rice, Maize
+# [1:2] = Ph 0.01, Ph 0.0001
+# [1:100] =  points in time
+###
+
+dfy = array2df(data$y)
+dfx = array2df(data$x)
+dfx = dfx[c("d1","d2","d3","data$x")]
+dfXy = cbind(dfx,dfy$"data$y") 
+
+colnames(dfXy) = c("Model","Crop","Phi","x","y") 
+
+### Change values
+
+# MODELS
+dfXy$Model[dfXy$Model==1] ="GFDL"
+dfXy$Model[dfXy$Model==2] ="MPI"
+dfXy$Model[dfXy$Model==3] ="IPSL"
+dfXy$Model[dfXy$Model==4] ="Hadley"
+
+# CROPS
+dfXy$Crop[dfXy$Crop==1] ="Wheat"
+dfXy$Crop[dfXy$Crop==2] ="Rice"
+dfXy$Crop[dfXy$Crop==3] ="Maize"
+
+# PH
+dfXy$Phi[dfXy$Phi==1] ="Phi 2"
+dfXy$Phi[dfXy$Phi==2] ="Phi 4"
+
+# Rescale Y
+dfXy$y =  dfXy$y/1000000
+
+library (ggplot2)
+
+# PLOT
+yloss = ggplot(dfXy, aes(x=x, y=y, color=Crop)) 
+yloss = yloss + geom_point(size=2, shape=20,alpha = 0.7)
+yloss = yloss + facet_wrap(~Phi, ncol = 1,  scales="free")
+# confidence
+# yloss + geom_ribbon(alpha=0.2)
+# annotations
+ylab=expression(bold(Yield~Loss~~"(Ton/yr)"*10^"6"))
+yloss = yloss + ggtitle("") + xlab("Temp anomaly") + ylab(ylab)
+## Fixed Y 
+# yloss + scale_y_discrete(breaks=seq(0, max(dfXy$y), 3))
+## colors and theme
+yloss = yloss + theme_bw()
+# yloss = yloss + scale_color_brewer(name="Model",palette = "Spectral") 
+
+yloss
+
+
+# Save plot
+Save plot
+ppi = 300
+plotname = file.path(wdpng,paste("fig2",".png",sep = ""))
+png(filename=plotname,width=14*ppi, height=10*ppi, res=ppi )
+yloss
+dev.off()
+
+
+# ////////////////////////  Figure 3) 
+# pending: need to get 4 deg values
+
+
+# ////////////////////////  Figure 4) 
+# x = fractional change
+# y = regions
+# split data points by crop
+# panels dividied by phi
+
+
+setwd(wddata)
+fg2 = read.csv("summary.csv", header=TRUE,na.strings = c("#VALUE!", "#N/A", "N/A", "NA", ""))
+
+# rename phi
+fg2$phi =  as.factor(fg2$phi)
+levels(fg2$phi) = c("Phi 2", "Phi 3", "Phi 4")
+
+# change form long to wide (crteate columns for each phi)
+fg2 = dcast(fg2, region + crop + phi ~ fact, value.var="value")
+
+# fg2 = rowMeans(ALL[ ,c("IPM","MET","POP")],na.rm=TRUE) - not used
+
+# leave IPM column
+fg2=fg2[-which(names(fg2) %in% c("MET","POP"))]
+
+
+# PLOT
+library(ggplot2)
+p = ggplot(fg2, aes(x = IPM, y = region, color=crop)) 
+p = p + geom_point() 
+p = p + facet_wrap(~phi, ncol = 1,  scales="free")
+p
+
+# Save plot
+# ppi = 300
+# plotname = file.path(wdpng,paste("fig4",".png",sep = ""))
+# png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
+# p
+# dev.off()
+
+
+
+
+
+
+
+
+
+# ////////////////// Backyard: not worked through
+
 
 
 ###------- FIGURE S1:  Maps of demographic change for each crop, for each value of Phi (9 maps) showing consistency of pattern across models.  
@@ -169,14 +298,8 @@ dev.off()
   
 fg = ALL[,c("LAT","LON","IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W3","IPM_W4")]
 
-
-
-
-  
 ### --------- FIGURE S2 : latitudinal median change in insect pest pressure at high (black), medium, (yellow) and low (blue) overwinter survival for maize (A), Rice (B), and Wheat (C).
-
-# which variables am I using?
-# IMP_xy
+# variables: IMP_xy
 
 
 fg = ALL[,c("LAT","LON","IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W3","IPM_W4")]
@@ -210,7 +333,7 @@ WHEAT_c<-subset(WHEAT_c,TOT_YLD_TOT_M >= max(TOT_YLD_TOT_M*.001))
 ####
 # MAIZE_c = MAIZE_c$TOT_YLD_TOT_M
 # 
-# 
+# Example of cicrle plot in ggplot:
 # ggplot(asd_data, aes(x=prev2003, y=asd_diff, weight=denom2003, colour=octile, size=denom2003)) + 
 #   geom_point( alpha=0.8, guide="none") + 
 #   scale_size_area(breaks=c(250, 500, 1000, 10000, 50000), "2002 District\nElementary School\nPopulation", max_size=20) + 
