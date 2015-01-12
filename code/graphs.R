@@ -67,7 +67,7 @@ m1 = ggplot()  + geom_polygon(data=map,aes(x=long, y=lat,group=group), fill="gra
 m1 = m1 + geom_raster(data=fg,aes(fill=brks,x=LON, y=LAT),interpolate = T)
 m1 = m1 + scale_fill_manual(values =rev(cols(12)))
 m1 = m1 +  ggtitle("Fractional change in population metabolism")
-m1 = m1 + facet_wrap(~variable, ncol = 1,  scales="free")
+  m1 = m1 + facet_wrap(~variable, ncol = 1,  scales="free")
 m1 = m1 + guides(fill=guide_legend(title=NULL))
 
 # add theme to map
@@ -117,37 +117,6 @@ plotname = file.path(wdpng,paste("fig1b_v1",".png",sep = ""))
 png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
 p
 dev.off()
-
-
-# ------- FIG 1b_v2: ALL DATA POINTS  Adjacent panels summarizing fractional change by regions and crops
-
-fg1b = read.csv(file.path(wddata,"summary.csv")) # data produced by the summarize_by_region.r script
-fg1b = fg1b[,-1]
-
-# prepare for plotting
-# as.fcators (sets facetting order)
-fg1b$fact = factor(fg1b$fact, levels=c('MET','POP','IPM'))
-
-# change crop names
-fg1b$crop = as.factor(fg1b$crop )
-levels(fg1b$crop) = c("Maize", "Rice", "Wheat")
-
-# PLOT
-library(ggplot2)
-p = ggplot(fg1b, aes(x = region, y = value)) + geom_boxplot() 
-p = p + coord_flip()
-p = p + facet_grid(fact~crop) 
-p = p + ylim(ymin=-0.5, ymax=0.5)
-p = p + xlab(label = "") + ylab(label = "Fractional change") 
-p
-
-# Save plot
-# ppi = 300
-# plotname = file.path(wdpng,paste("fig1b_v2",".png",sep = ""))
-# png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
-# p
-# dev.off()
-
 
 
 # pending: Align fg1 (maps) and fg1b
@@ -232,16 +201,57 @@ yloss
 dev.off()
 
 
-# ////////////////////////  Figure 3) 
+#####  ////////////////////////  Figure 3) 
 # pending: need to get 4 deg values
 
+
+
+# ++++++++++++++  SUPLEMENTAL FIGS ++++++++++++++
+
+###------- FIGURE S1a: -  Maps of demographic change for each crop, for each value of Phi (9 maps) showing consistency of pattern across models.  
+
+# which variables I'm using?
+# IPM_xy
+
+fg = ALL[,c("LAT","LON","IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W3","IPM_W4")]
+
+# ------- FIGURE S1b - Adjacent panels summarizing fractional change by regions and crops (all data)
+fg = read.csv(file.path(wddata,"summary.csv")) # data produced by the summarize_by_region.r script
+
+# leave IPM only
+fg = fg[fg$fact == "IPM",]
+
+# remove unused cols
+fg = fg[,c(-1,-5)]
+
+# change crop names
+fg$crop = as.factor(fg$crop )
+levels(fg$crop) = c("Maize", "Rice", "Wheat")
+
+# PLOT # need to see how to combine flip and facet_wrap
+library(ggplot2)
+p = ggplot(fg, aes(x = region, y = value)) + geom_boxplot() 
+# p = p + coord_flip()
+p = p + facet_wrap(~crop, ncol = 1,  scales="free")
+p = p + ylim(ymin=-0.5, ymax=0.5)
+p = p + xlab(label = "") + ylab(label = "Fractional change") 
+p
+
+
+
+# Save plot
+# ppi = 300
+# plotname = file.path(wdpng,paste("fig1b_v2",".png",sep = ""))
+# png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
+# p
+# dev.off()
+# ////////////////////
 
 # ////////////////////////  Figure 4) 
 # x = fractional change
 # y = regions
 # split data points by crop
 # panels dividied by phi
-
 
 setwd(wddata)
 fg2 = read.csv("summary.csv", header=TRUE,na.strings = c("#VALUE!", "#N/A", "N/A", "NA", ""))
@@ -272,6 +282,7 @@ p
 # png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
 # p
 # dev.off()
+# //////////////////
 
 
 
@@ -285,12 +296,7 @@ p
 
 
 
-###------- FIGURE S1:  Maps of demographic change for each crop, for each value of Phi (9 maps) showing consistency of pattern across models.  
 
-# which variables I'm using?
-# IPM_xy
-  
-fg = ALL[,c("LAT","LON","IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W3","IPM_W4")]
 
 ### --------- FIGURE S2 : latitudinal median change in insect pest pressure at high (black), medium, (yellow) and low (blue) overwinter survival for maize (A), Rice (B), and Wheat (C).
 # variables: IMP_xy
