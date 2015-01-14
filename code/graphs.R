@@ -1,4 +1,4 @@
-# ------ Load data and initial variables
+# Load data and initial variables ------
 
 wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
@@ -7,21 +7,17 @@ wdfun = "~/R/Pest-MS/functions"
 
 # Load data
 setwd(wddata)
-
 ALL = read.csv("ALL.csv", header=TRUE,na.strings = c("#VALUE!", "#N/A", "N/A", "NA", ""))
 dat = read.csv(file.path(wddata,"dat.csv")) # data produced by the summarize_by_region.r script 
 dat = dat[,-1]
 
-# ----------
+# Load functions
+source(file.path(wdfun,"cols_gg.r")) 
+source(file.path(wdfun,"multiplots_gg.r"))
 
 
-
-#   //////////////////////// FIGURE 1) 
-
-#####
-# --- Fig 1a) Map of Fractional change in population metablism
-
-# which variables I'm using?
+# Fig 1a) Map of Fractional change in population metablism ----
+# Variables
 # METABOLISM GRAPHIC = MET_AVG3
 # POPULATION GRAPHIC = POP_AVG3
 # IPM AVERAGE ACROSS ALL THREE CROPS = IPM_AVG3
@@ -41,48 +37,22 @@ fg$brks <- cut(fg$value, breaks =breaks, labels = as.character(breaks[-1]), righ
 ## change "variable" names [for ggplot]
 levels(fg$variable) = c("Metabolism", "Population", "Total")
 
-## Prepare color palette
-library(RColorBrewer)
-pal <- brewer.pal("Spectral",n = 11)
-cols<- colorRampPalette(pal)
-
 # generate basemap
-library(ggplot2)
-library(mapdata)
-map = map_data("world")
-
-# out antartica and big lakes
-map = map[!map$region=="Antarctica",]
-lakes1 = grep(unique(map$region),pattern = "Lake",value = T,ignore.case = T)
-lakes2 = grep(unique(map$subregion),pattern = "lake",value = T,ignore.case = T)
-for (i in lakes1){
-  map = map[!map$region==i,]	
-}
-
-rm(lakes1)
-rm(lakes2)
-rm(i)
+source(file.path(wdfun,"basemap.r"))
 
 ## plot
+library(ggplot2)
 m1 = ggplot()  + geom_polygon(data=map,aes(x=long, y=lat,group=group), fill="gray", color="gray",size=0.2)
 m1 = m1 + geom_raster(data=fg,aes(fill=brks,x=LON, y=LAT),interpolate = T)
 m1 = m1 + scale_fill_manual(values =rev(cols(12)))
 m1 = m1 +  ggtitle("Fractional change in population metabolism")
 m1 = m1 + facet_grid(variable~.)
 m1 = m1 + guides(fill=guide_legend(title=NULL))
-
-# add theme to map
-m1 = m1 + theme_bw()
+m1 = m1 + theme(panel.grid = element_blank())
 m1 = m1 + xlab("") + ylab("")
 
-m1
-
-# theme
-m1 = m1 + theme_bw(base_family = "Helvetica")
-m1 = m1 + theme(axis.title.x = element_text(face = "bold", color = "black", size = 12), axis.title.y = element_text(face = "bold", color = "black", size = 12), plot.title = element_text(face = "bold", color = "black", size = 16), strip.background = element_rect(fill = "white",colour = "white"), strip.text.x = element_text(colour = 'black', size = 12, face="bold"), strip.text.y = element_text(colour = 'black', size = 12, face="bold"))
-
-m1 = m1 + theme(panel.grid = element_blank())
-
+# update theme
+m1 = m1 %+% mygg
 m1
 
 # Save plot
@@ -91,10 +61,16 @@ m1
 # png(filename=plotname,width=9*ppi, height=15*ppi, res=ppi )
 # m1
 # dev.off()
-#####
 
-#####
-# --- Fig 1b) Summary of fractional change (horizontal plot, phi3 in the middle)
+
+
+
+# Fig 1b) Summary of fractional change (horizontal plot, phi3 in the middle) ----
+# Variables:
+# MET | POP | IPM
+# regions
+# crops
+# phi
 
 # data
 fg1b = dat
@@ -120,12 +96,11 @@ levels(fg1b$crop) = c("Maize", "Rice", "Wheat")
 
 # //// PLOT
 library(ggplot2)
-library(RColorBrewer)
 
 # init variables
 pd = position_dodge(width = 1)
 
-p = ggplot(fg1b, aes(x = region, y =phi3, color=crop)) # + geom_boxplot() 
+p = ggplot(fg1b, aes(x = region, y =phi3, color=crop)) 
 p = p + geom_errorbar(aes(ymin=phi2, ymax=phi4), width=0.05, position=pd, width = 0.5) 
 p = p + geom_point(position = pd)
 p = p + coord_flip()
@@ -135,29 +110,32 @@ p = p + xlab(label = "") + ylab(label = "Fractional change")
 
 # horizontal lines
 p = p + geom_vline(xintercept=seq(0.5, length(unique(fg1b$region)), 1), lwd=0.2, colour="black")
+p = p + theme(panel.grid.major.y = element_blank())
 
-# scales //  if colors exceed 11 use cols fun instead
-n = 4
+# scales
 labs = levels(fg1b$crop)
-p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=brewer.pal("Spectral",n = n))
+p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=palcrop)
 
+# update theme
+p = p %+% mygg
 p
 
-# theme
-p = p + theme_bw(base_family = "Helvetica")
-p = p + theme(axis.title.x = element_text(face = "bold", color = "black", size = 12), axis.title.y = element_text(face = "bold", color = "black", size = 12), plot.title = element_text(face = "bold", color = "black", size = 12), strip.background = element_rect(fill = "white",colour = "white"), strip.text.x = element_text(colour = 'black', size = 12, face="bold"), strip.text.y = element_text(colour = 'black', size = 12, face="bold"))
+# # Save plot
+# ppi = 300
+# plotname = file.path(wdpng,paste("fig1b",".png",sep = ""))
+# png(filename=plotname,width=6*ppi, height=8*ppi, res=ppi )
+# p
+# dev.off()
 
-p  =   p + theme(panel.grid.major.y = element_blank())
-p
-# Save plot
-ppi = 300
-plotname = file.path(wdpng,paste("fig1b_v1",".png",sep = ""))
-png(filename=plotname,width=6*ppi, height=8*ppi, res=ppi )
-p
-dev.off()
 
-#####
-#///// Combined plot p and m1
+
+
+# Fig 1c) Latitudinal median change in insect pest pressure ----
+ 
+
+
+
+# Fig 1) 1a and 1b combined ----
 
 # plot m1 again (no ggtitle)
 m1 = ggplot()  + geom_polygon(data=map,aes(x=long, y=lat,group=group), fill="gray", color="gray",size=0.2)
@@ -165,10 +143,8 @@ m1 = m1 + geom_raster(data=fg,aes(fill=brks,x=LON, y=LAT),interpolate = T)
 m1 = m1 + scale_fill_manual(values =rev(cols(12)))
 m1 = m1 + facet_grid(variable~.)
 m1 = m1 + guides(fill=guide_legend(title=NULL))
-m1 = m1 + theme_bw()
-m1 = m1 + theme_bw(base_family = "Helvetica")
-m1 = m1 + theme(strip.background = element_rect(fill = "white",colour = "white"), strip.text.x = element_text(colour = 'black', size = 12, face="bold"), strip.text.y = element_text(colour = 'black', size = 12, face="bold"))
 m1 = m1 + theme(panel.grid = element_blank())
+m1 = m1 %+% mygg
 
 # remove unused stuff m1
 m1 = m1 + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.title = element_blank())
@@ -185,17 +161,19 @@ p = p + theme(strip.background = element_blank(), strip.text.x = element_blank()
 
 # grid plot
 library(gridExtra)
-grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,2), height = c(1, 1),main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2)))
+# grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,2), height = c(1, 1),main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2)))
 
 # Save plot
-ppi = 300
-plotname = file.path(wdpng,paste("Figure_1",".png",sep = ""))
-png(filename=plotname,width=11*ppi, height=11*ppi, res=ppi )
-grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,1.5), height = c(1, 1),main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2)))
-dev.off()
+# ppi = 300
+# plotname = file.path(wdpng,paste("Figure_1",".png",sep = ""))
+# png(filename=plotname,width=11*ppi, height=11*ppi, res=ppi )
+# grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,1.5), height = c(1, 1),main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2)))
+# dev.off()
 
-#####
-# ////////////////////////  Figure 2) 
+
+
+
+# Fig 2a) Globally integrated loss of crop yield (smooth) ----
 library(R.matlab)
 library(arrayhelpers)
 
@@ -209,7 +187,7 @@ data = readMat("MS_Fig2.mat")
 # [1:4] = GFDL, MPI, IPSL, Hadley
 # [1:3] = Wheat, Rice, Maize
 # [1:2] = Ph 0.01, Ph 0.0001
-# [1:100] =  points in time
+# [1:100] =  Temporal anomaly
 ###
 
 dfy = array2df(data$y)
@@ -220,7 +198,6 @@ dfXy = cbind(dfx,dfy$"data$y")
 colnames(dfXy) = c("Model","Crop","Phi","x","y") 
 
 # Change values
-
 # MODELS
 dfXy$Model[dfXy$Model==1] ="GFDL"
 dfXy$Model[dfXy$Model==2] ="MPI"
@@ -246,32 +223,26 @@ levels(dfXy$Crop) = c("Maize", "Rice", "Wheat")
 library (ggplot2)
 
 # PLOT
-# p = ggplot(dfXy, aes(x=x, y=y, color=Crop)) 
-p = ggplot(dfXy, aes(x=x, y=y, color=Crop, shape=Phi)) # (plotly)
-# p = p + geom_smooth(method=lm, size= 1) 
-p = p + geom_point() #  (plotly)
-# p = p + facet_wrap(~Phi, ncol = 1)
-p
-# confidenc e
+p = ggplot(dfXy, aes(x=x, y=y, color=Crop)) 
+# p = ggplot(dfXy, aes(x=x, y=y, color=Crop, shape=Phi)) # (plotly)
+p = p + geom_smooth(method=lm, size= 1) 
+# p = p + geom_point() #  (plotly)
+p = p + facet_wrap(~Phi, ncol = 1) # (remove for plotly)
 # p + geom_ribbon(alpha=0.2)
 # annotations
-# ylab=expression(bold(Yield~loss~~"(Ton/yr)"*10^"6"))
-ylab= "Yield loss (Ton/yr) *10^6" # (plotly)
+ylab=expression(bold(Yield~loss~~"(Ton/yr)"*10^"6"))
+# ylab= "Yield loss (Ton/yr) *10^6" # (plotly)
 p = p + ggtitle("Globally integrated loss of crop yield") + xlab("Temp anomaly") + ylab(ylab)
+
 ## Fixed Y 
 # p + scale_y_discrete(breaks=seq(0, max(dfXy$y), 3))
 
-# scales //  if colors exceed 11 use cols fun instead
-library(RColorBrewer)
-n = 4
+# scales
 labs = levels(dfXy$Crop)
-p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=brewer.pal("Spectral",n = n))
+p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=palcrop)
 
-p
 # theme
-p = p + theme_bw(base_family = "Helvetica")
-p = p + theme(axis.title.x = element_text(face = "bold", color = "black", size = 10), axis.title.y = element_text(face = "bold", color = "black", size = 12), plot.title = element_text(face = "bold", color = "black", size = 14), legend.position = "bottom", strip.background = element_rect(fill = "white",colour = "white"), strip.text.x = element_text(colour = 'black', size = 12, face="bold"), strip.text.y = element_text(colour = 'black', size = 12, face="bold"))
-
+p = p %+% mygg
 p
 
 # Save plot
@@ -282,28 +253,56 @@ p
 # dev.off()
 
 
-#####
+# Fig 2b) Globally integrated loss of crop yield (dotplot) ----
+
+# PLOT
+
+p = ggplot(dfXy, aes(x=x, y=y, color=Crop, shape=Phi)) # (plotly)
+p = p + geom_jitter(alpha=0.5) #  (for plotly use geom_point)
+# no faceting remove for plotly
+
+# annotations
+ylab=expression(bold(Yield~loss~~"(Ton/yr)"*10^"6"))
+# ylab= "Yield loss (Ton/yr) *10^6" # (plotly)
+p = p + ggtitle("Globally integrated loss of crop yield") + xlab("Temp anomaly") + ylab(ylab)
+
+# scales
+labs = levels(dfXy$Crop)
+p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=palcrop)
+
+# theme
+p = p %+% mygg
+p
+
+# Save plot
+# ppi = 300
+# plotname = file.path(wdpng,paste("fig2b",".png",sep = ""))
+# png(filename=plotname,width=7*ppi, height=7*ppi, res=ppi )
+# p
+# dev.off()
 
 
-#####
-#//////////////////////////  Figure 3) 
+
+# Fig 3) 2 to 4 degree bar for IPM for each crop for each UN region.----
+# Variables
+# | IPM 2 deg| IPM 4 deg | 
+# regions
+# crops
+# Phi = 0.001
 # pending: need to get 4 deg values
 
-#####
 
 
 
-# ++++++++++++++  SUPLEMENTAL FIGS ++++++++++++++
-
-#####
-# ////// FIGURE S1a: -  Maps of demographic change for each crop, for each value of Phi (9 maps) showing consistency of pattern across models.  
-
-# which variables I'm using?
-# IPM_xy
+# Fig S1a) Maps of demographic change for each crop, for each value of Ph####
+# |IPM|
+# Phi
+# Crops
 
 fg = ALL[,c("LAT","LON","IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W3","IPM_W4")]
 
-# ------- FIGURE S1b - Adjacent panels summarizing fractional change by regions and crops (all data)
+
+# Fig S1b) Adjacent panels summarizing fractional change by regions and crops (all data)----
 fg = dat
 
 # leave IPM only
@@ -331,10 +330,19 @@ p
 # png(filename=plotname,width=10*ppi, height=10*ppi, res=ppi )
 # p
 # dev.off()
-#####
 
-#####
-# ////////////////////////  Figure 4) 
+
+
+# Fig S3) Relationship between yield (relative yield, in 10 percentile bins) and median change in insect pest pressure ----
+# Variables
+# IPM
+# Phi
+# relative yield in 10 percentile bins
+
+
+
+
+# Fig S4) Regional IMP summary  #####
 # x = fractional change
 # y = regions
 # split data points by crop
@@ -443,6 +451,30 @@ WHEAT_c<-subset(WHEAT_c,TOT_YLD_TOT_M >= max(TOT_YLD_TOT_M*.001))
 
 
 
+
+# Fig S5)  (Maize) projected future crop loss, current yield per hectare, and current yield loss due to pests, and projected future crop loss ----
+# Variables
+# Crop
+# Yield loss
+# Projected yield loss
+
+
+
+
+# Fig S6)  (Rice) projected future crop loss, current yield per hectare, and current yield loss due to pests, and projected future crop loss ----
+# Variables
+# Crop
+# Yield loss
+# Projected yield loss
+
+
+
+
+# Fig S7)  (Wheat) projected future crop loss, current yield per hectare, and current yield loss due to pests, and projected future crop loss ----
+# Variables
+# Crop
+# Yield loss
+# Projected yield loss
 
 
 
