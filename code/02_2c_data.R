@@ -265,7 +265,7 @@ rm(list =c("IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W
 # ---- 6) ADD COUNTRY NAMES TO DATA ----
 # to be used to make summary info for regions.
 library(sp)
-setwd(wdtables)
+setwd(wddata)
 load("WorldPolyCountries.Rdata")
 
 coordinates(ALL) <- c("LON", "LAT")
