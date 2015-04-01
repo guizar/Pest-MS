@@ -7,7 +7,7 @@ rm(list=ls())
 
 #---- Load data and initial variables 
 wdpng = "~/R/Pest-MS/png"
-wddata = "~/R/Pest-MS/data"
+wdtables = "~/R/Pest-MS/tables"
 wdfun = "~/R/Pest-MS/functions"
 wdrdata = "~/R/Pest-MS/RData/"
 
@@ -25,7 +25,7 @@ SUM_DAT_4c <- ddply(DAT_4c, c("fact","region","phi","crop"), summarise,
                     max= max(value,na.rm = T))
 
 # Save data
-write.csv(SUM_DAT_4c, file.path(wddata,"SUM_DAT_4c.csv"),row.names=F)
+write.csv(SUM_DAT_4c, file.path(wdtables,"SUM_DAT_4c.csv"),row.names=F)
 # save.image(file.path(wdrdata,"ALL_4c.RData"))
 
 
@@ -85,9 +85,9 @@ IPM_4c_MAIZE = IPM_4c_MAIZE[order(IPM_4c_MAIZE$median.2,decreasing = T),]
 IPM_4c_RICE = IPM_4c_RICE[order(IPM_4c_RICE$median.2,decreasing = T),]
 IPM_4c_WEAT = IPM_4c_WEAT[order(IPM_4c_WEAT$median.2,decreasing = T),]
 
-write.csv(IPM_4c_MAIZE,file.path(wddata,"ST1_IPM_4c_MAIZE.csv"),row.names=F)
-write.csv(IPM_4c_RICE, file.path(wddata,"ST1_IPM_4c_RICE.csv"),row.names=F)
-write.csv(IPM_4c_WEAT, file.path(wddata,"ST1_IPM_4c_WEAT.csv"),row.names=F)
+write.csv(IPM_4c_MAIZE,file.path(wdtables,"ST1_IPM_4c_MAIZE.csv"),row.names=F)
+write.csv(IPM_4c_RICE, file.path(wdtables,"ST1_IPM_4c_RICE.csv"),row.names=F)
+write.csv(IPM_4c_WEAT, file.path(wdtables,"ST1_IPM_4c_WEAT.csv"),row.names=F)
 
 rm(IPM_4c_MAIZE)
 rm(IPM_4c_RICE)
@@ -144,9 +144,9 @@ TONNES_4c_MAIZE = TONNES_4c_MAIZE[,cols]
 TONNES_4c_MAIZE = TONNES_4c_MAIZE[,cols]
 rm(cols)
 
-write.csv(TONNES_4c_MAIZE,file.path(wddata,"ST2_TONNES_4c_MAIZE.csv"),row.names=F)
-write.csv(TONNES_4c_RICE, file.path(wddata,"ST2_TONNES_4c_RICE.csv"),row.names=F)
-write.csv(TONNES_4c_WEAT, file.path(wddata,"ST2_TONNES_4c_WEAT.csv"),row.names=F)
+write.csv(TONNES_4c_MAIZE,file.path(wdtables,"ST2_TONNES_4c_MAIZE.csv"),row.names=F)
+write.csv(TONNES_4c_RICE, file.path(wdtables,"ST2_TONNES_4c_RICE.csv"),row.names=F)
+write.csv(TONNES_4c_WEAT, file.path(wdtables,"ST2_TONNES_4c_WEAT.csv"),row.names=F)
 
 rm(TONNES_4c_MAIZE)
 rm(TONNES_4c_RICE)
@@ -244,9 +244,9 @@ YLPH_4c_RICE = dplyr::arrange(YLPH_4c_RICE, desc(median))
 YLPH_4c_WEAT = dplyr::arrange(YLPH_4c_WEAT, desc(median))
 
 # write csv
-write.csv(YLPH_4c_MAIZE,file.path(wddata,"ST3_YLPH_4c_MAIZE.csv"),row.names=F)
-write.csv(YLPH_4c_RICE, file.path(wddata,"ST3_YLPH_4c_RICE.csv"),row.names=F)
-write.csv(YLPH_4c_WEAT, file.path(wddata,"ST3_YLPH_4c_WEAT.csv"),row.names=F)
+write.csv(YLPH_4c_MAIZE,file.path(wdtables,"ST3_YLPH_4c_MAIZE.csv"),row.names=F)
+write.csv(YLPH_4c_RICE, file.path(wdtables,"ST3_YLPH_4c_RICE.csv"),row.names=F)
+write.csv(YLPH_4c_WEAT, file.path(wdtables,"ST3_YLPH_4c_WEAT.csv"),row.names=F)
 
 # remove unused
 rm(YLPH_4c_MAIZE)
@@ -316,9 +316,9 @@ IYCC_4c_RICE = IYCC_4c_RICE[order(IYCC_4c_RICE$median.2,decreasing = T),]
 IYCC_4c_WEAT = IYCC_4c_WEAT[order(IYCC_4c_WEAT$median.2,decreasing = T),]
 
 # write csv
-write.csv(IYCC_4c_MAIZE,file.path(wddata,"ST4_IYCC_4c_MAIZE.csv"),row.names=F)
-write.csv(IYCC_4c_RICE, file.path(wddata,"ST4_IYCC_4c_RICE.csv"),row.names=F)
-write.csv(IYCC_4c_WEAT, file.path(wddata,"ST4_IYCC_4c_WEAT.csv"),row.names=F)
+write.csv(IYCC_4c_MAIZE,file.path(wdtables,"ST4_IYCC_4c_MAIZE.csv"),row.names=F)
+write.csv(IYCC_4c_RICE, file.path(wdtables,"ST4_IYCC_4c_RICE.csv"),row.names=F)
+write.csv(IYCC_4c_WEAT, file.path(wdtables,"ST4_IYCC_4c_WEAT.csv"),row.names=F)
 
 # remove unused
 rm(IYCC_4c_MAIZE)

@@ -4,7 +4,7 @@
 
 # ---- ALL_2c (DAT_2c) ----
 # Used in graphics and in the Sup table: 1
-wddata = "~/R/Pest-MS/data/"
+wdtables = "~/R/Pest-MS/tables/"
 wdrdata = "~/R/Pest-MS/RData/"
 setwd(wdrdata)
 
@@ -39,7 +39,7 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(DAT_2c, file.path(wddata,"DAT_2c.csv"),row.names=FALSE)
+# write.csv(DAT_2c, file.path(wdtables,"DAT_2c.csv"),row.names=FALSE)
 # save.image(file.path(wdrdata,"ALL_2c.RData"))
 
 
@@ -83,8 +83,8 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(TONNES_2c, file.path(wddata,"TONNES_2c.csv"),row.names=FALSE)
-# write.csv(TONNES_PRES, file.path(wddata,"TONNES_PRES.csv"),row.names=FALSE)
+# write.csv(TONNES_2c, file.path(wdtables,"TONNES_2c.csv"),row.names=FALSE)
+# write.csv(TONNES_PRES, file.path(wdtables,"TONNES_PRES.csv"),row.names=FALSE)
 
 
 # ---- YLPH_2c----
@@ -143,8 +143,8 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(YLPH_2c, file.path(wddata,"YLPH_2c.csv"),row.names=FALSE)
-# write.csv(YL_PRES, file.path(wddata,"YL_PRES.csv"),row.names=FALSE)
+# write.csv(YLPH_2c, file.path(wdtables,"YLPH_2c.csv"),row.names=FALSE)
+# write.csv(YL_PRES, file.path(wdtables,"YL_PRES.csv"),row.names=FALSE)
 
 
 # ---- IYCC_2c----
@@ -177,8 +177,8 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(YLPH_2c, file.path(wddata,"YLPH_2c.csv"),row.names=FALSE)
-# write.csv(YL_PRES, file.path(wddata,"YL_PRES.csv"),row.names=FALSE)
+# write.csv(YLPH_2c, file.path(wdtables,"YLPH_2c.csv"),row.names=FALSE)
+# write.csv(YL_PRES, file.path(wdtables,"YL_PRES.csv"),row.names=FALSE)
 
 
 #---- SAVE DATA 2c ----
@@ -193,7 +193,7 @@ save.image(file.path(wdrdata,"ALL_2c.RData"))
 rm(list=ls())
 
 # Used in graphics and in the Sup table: 1
-wddata = "~/R/Pest-MS/data/"
+wdtables = "~/R/Pest-MS/tables/"
 wdrdata = "~/R/Pest-MS/RData/"
 setwd(wdrdata)
 
@@ -228,7 +228,7 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(DAT_4c, file.path(wddata,"DAT_4c.csv"),row.names=FALSE)
+# write.csv(DAT_4c, file.path(wdtables,"DAT_4c.csv"),row.names=FALSE)
 # save.image(file.path(wdrdata,"ALL_4c.RData"))
 
 
@@ -272,8 +272,8 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(TONNES_4c, file.path(wddata,"TONNES_4c.csv"),row.names=FALSE)
-# write.csv(TONNES_PRES, file.path(wddata,"TONNES_PRES.csv"),row.names=FALSE)
+# write.csv(TONNES_4c, file.path(wdtables,"TONNES_4c.csv"),row.names=FALSE)
+# write.csv(TONNES_PRES, file.path(wdtables,"TONNES_PRES.csv"),row.names=FALSE)
 
 
 # ---- YLPH_4c----
@@ -332,8 +332,8 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(YLPH_4c, file.path(wddata,"YLPH_4c.csv"),row.names=FALSE)
-# write.csv(YL_PRES, file.path(wddata,"YL_PRES.csv"),row.names=FALSE)
+# write.csv(YLPH_4c, file.path(wdtables,"YLPH_4c.csv"),row.names=FALSE)
+# write.csv(YL_PRES, file.path(wdtables,"YL_PRES.csv"),row.names=FALSE)
 
 
 # ---- IYCC_4c----
@@ -366,8 +366,8 @@ rm(c2)
 rm(c1)
 
 # save data 
-# write.csv(YLPH_4c, file.path(wddata,"YLPH_4c.csv"),row.names=FALSE)
-# write.csv(YL_PRES, file.path(wddata,"YL_PRES.csv"),row.names=FALSE)
+# write.csv(YLPH_4c, file.path(wdtables,"YLPH_4c.csv"),row.names=FALSE)
+# write.csv(YL_PRES, file.path(wdtables,"YL_PRES.csv"),row.names=FALSE)
 
 
 #---- SAVE DATA 4c ----

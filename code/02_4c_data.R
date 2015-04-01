@@ -4,9 +4,9 @@ rm(list=ls())
 
 wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
-wddata = "~/R/Pest-MS/data"
+wdtables = "~/R/Pest-MS/tables"
 wdfun = "~/R/Pest-MS/functions"
-wdsource ="~/R/Pest-MS/source/"
+wddata ="~/R/Pest-MS/data/"
 
 # functions
 # source(file.path(wdfun,"color bar.R"))
@@ -16,7 +16,7 @@ wdsource ="~/R/Pest-MS/source/"
 
 # ---- 1) Input files from Matlab -  Focusing on 2 degrees ----
 
-setwd(paste(wdsource,"Impact_4degC",sep="/"))
+setwd(paste(wddata,"Impact_4degC",sep="/"))
 
 IPM_M2<-read.table("Impact_popmet_lres_a100b1p2_maize.txt", header= FALSE) 
 IPM_M3<-read.table("Impact_popmet_lres_a100b1p3_maize.txt", header= FALSE) 
@@ -265,7 +265,7 @@ rm(list =c("IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4","IPM_W2","IPM_W
 # ---- 6) ADD COUNTRY NAMES TO DATA ----
 # to be used to make summary info for regions.
 library(sp)
-setwd(wddata)
+setwd(wdtables)
 load("WorldPolyCountries.Rdata")
 
 coordinates(ALL) <- c("LON", "LAT")
@@ -426,10 +426,10 @@ ALL$IYCC_W4<-ALL$IPM_W4*(ALL$CLF_W)
 summary(is.na(ALL$LAT))
 ALL<-subset(ALL,!is.na(ALL$LAT))
 
-setwd(wddata)
+setwd(wdtables)
 
 # Write ALL - name it to 4c degrees
-write.csv(ALL, file.path(wddata,"ALL_4c.csv"),row.names=FALSE)
+write.csv(ALL, file.path(wdtables,"ALL_4c.csv"),row.names=FALSE)
 ALL_4c = ALL
 rm(ALL)
 
@@ -439,7 +439,7 @@ rm(METPOP)
 
 # Write Rdata
 setwd(wd)
-rm(list=c("wd","wdpng","wddata","wdfun","wdsource"))
+rm(list=c("wd","wdpng","wdtables","wdfun","wddata"))
 save.image(file ="RData/ALL_4c.RData")
 # ///////////////////////
 

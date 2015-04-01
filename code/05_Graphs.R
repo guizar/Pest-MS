@@ -5,7 +5,7 @@
 
 wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
-wddata = "~/R/Pest-MS/data"
+wdtables = "~/R/Pest-MS/tables"
 wdrdata = "~/R/Pest-MS/RData/"
 wdfun = "~/R/Pest-MS/functions"
 
@@ -179,7 +179,7 @@ library(gridExtra)
 library(R.matlab)
 library(arrayhelpers)
 
-setwd(wddata)
+setwd(wdtables)
 data = readMat("MS_Fig2.mat")
 
 #### Data composition
@@ -350,7 +350,7 @@ p
 # split data points by crop
 # panels dividied by phi
 
-setwd(wddata)
+setwd(wdtables)
 fg2 = read.csv("summary.csv", header=TRUE,na.strings = c("#VALUE!", "#N/A", "N/A", "NA", ""))
 
 # rename phi
@@ -405,7 +405,7 @@ fg = ALL_2c[,c("LAT","LON","IPM_M2","IPM_M3","IPM_M4","IPM_R2","IPM_R3","IPM_R4"
 
 ## ---------- FIGURE 3: Predicted median increase in insect pest pressure on crops as a function of crop yield (median yield for each country), for A) Maize,  B) Rice, and C) Wheat BUBBLE PLOTS
 
-setwd(wddata)
+setwd(wdtables)
 
 # read csvs
 MAIZE_c<-read.csv("MAIZE by country.csv", header=TRUE)
