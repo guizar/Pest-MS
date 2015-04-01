@@ -2,11 +2,8 @@
 .Rhistory
 .Rproj.user
 munging
-<<<<<<< HEAD
 sandbox
 png
 RData
-=======
-intro_plotly.r
-graph_sandox.r
->>>>>>> a274f936f293ae6f3f7aa299430e5e2a9f153405
+.Rapp.history
+.DS_Store	
