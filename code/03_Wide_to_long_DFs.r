@@ -2,21 +2,22 @@
 # Prepare data frames for both graphics and tables
 # //////
 
+rm(list = ls())
+
 # ---- ALL_2c (DAT_2c) ----
 # Used in graphics and in the Sup table: 1
 wdtables = "~/R/Pest-MS/tables/"
 wdrdata = "~/R/Pest-MS/RData/"
-setwd(wdrdata)
 
 # load Rdata 
-load("ALL_2c.RData") 
+load(file.path(wdrdata,"ALL_2c.RData")) 
 
 # prepare DF 
-DAT_2c = ALL_2c[,c("region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
+DAT_2c = ALL_2c[,c("NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
 
 # Change from wide to long
 library(reshape2)
-DAT_2c = melt(DAT_2c, id.vars="region",na.rm=T)
+DAT_2c = melt(DAT_2c, id.vars=c("NAME","region"),na.rm=T)
 
 # split cols by fact and crop
 t = colsplit(DAT_2c$variable,"_", c("fact","crop"))
@@ -47,15 +48,15 @@ rm(c1)
 # Sup 2:  Total yield and projected annual yield loss in 2050, across a full range of insect life-histories 
 
 # YIELD (tonnes) TOTAL PER CELL (YLD_TOT_x)
-TONNES_PRES = ALL_2c[,c("region","YLD_TOT_M","YLD_TOT_R","YLD_TOT_W")]
+TONNES_PRES = ALL_2c[,c("NAME","region","YLD_TOT_M","YLD_TOT_R","YLD_TOT_W")]
 
 # TOTAL TONNES LOST PER CELL DUE TO CLIMATE INDUCED CHANGES IN INSECT PESTS (CROP LOSS PER CELL- CL2050_xy)
-TONNES_2c = ALL_2c[,c("region","CL2050_M2","CL2050_M3","CL2050_M4","CL2050_R2","CL2050_R3","CL2050_R4","CL2050_W2","CL2050_W3","CL2050_W4")]
+TONNES_2c = ALL_2c[,c("NAME","region","CL2050_M2","CL2050_M3","CL2050_M4","CL2050_R2","CL2050_R3","CL2050_R4","CL2050_W2","CL2050_W3","CL2050_W4")]
 
 # Change from wide to long
 library(reshape2)
-TONNES_PRES = melt(TONNES_PRES, id.vars="region",na.rm=T)
-TONNES_2c = melt(TONNES_2c, id.vars="region",na.rm=T)
+TONNES_PRES = melt(TONNES_PRES, id.vars=c("NAME","region"),na.rm=T)
+TONNES_2c = melt(TONNES_2c, id.vars=c("NAME","region"),na.rm=T)
 
 # split PRES cols by CROP
 t1 = colsplit(TONNES_PRES$variable,"_", c("YIELD_TOT","crop"))
@@ -92,7 +93,7 @@ rm(c1)
 
 library(plyr)
 # Select relevant columns
-YLPH_2c = dplyr::select(ALL_2c,region,IPM_M2,IPM_M3,IPM_M4,IPM_R2,IPM_R3,IPM_R4,IPM_W2,IPM_W3,IPM_W4,CLF_M,CY_M,CA_M,CLF_R,CY_R,CA_R,CLF_W,CY_W,CA_W)
+YLPH_2c = dplyr::select(ALL_2c,NAME,region,IPM_M2,IPM_M3,IPM_M4,IPM_R2,IPM_R3,IPM_R4,IPM_W2,IPM_W3,IPM_W4,CLF_M,CY_M,CA_M,CLF_R,CY_R,CA_R,CLF_W,CY_W,CA_W)
 
 # Compute yield (tonnes) lost per ha
 YLPH_2c <- dplyr::mutate(YLPH_2c,
@@ -110,14 +111,14 @@ YLPH_2c <- dplyr::mutate(YLPH_2c,
 YLPH_2c = dplyr::select(YLPH_2c,-c(IPM_M2,IPM_M3,IPM_M4,IPM_R2,IPM_R3,IPM_R4,IPM_W2,IPM_W3,IPM_W4,CLF_M,CY_M,CA_M,CLF_R,CY_R,CA_R,CLF_W,CY_W,CA_W))
 
 # PRESENT yield
-YL_PRES = dplyr::select(ALL_2c,region,CY_M,CY_R,CY_W)
+YL_PRES = dplyr::select(ALL_2c,NAME,region,CY_M,CY_R,CY_W)
 
 
 # Produce long version of the tables
 # Change from wide to long
 library(reshape2)
-YL_PRES = melt(YL_PRES, id.vars="region",na.rm=T)
-YLPH_2c = melt(YLPH_2c, id.vars="region",na.rm=T)
+YL_PRES = melt(YL_PRES, id.vars=c("NAME","region"), na.rm=T)
+YLPH_2c = melt(YLPH_2c, id.vars=c("NAME","region"), na.rm=T)
 
 # split PRES cols by CROP
 t1 = colsplit(YL_PRES$variable,"_", c("CY","crop"))
@@ -152,12 +153,12 @@ rm(c1)
 
 library(plyr)
 # Select relevant columns
-IYCC_2c = dplyr::select(ALL_2c,region,IYCC_M2,IYCC_M3,IYCC_M4,IYCC_R2,IYCC_R3,IYCC_R4,IYCC_W2,IYCC_W3,IYCC_W4)
+IYCC_2c = dplyr::select(ALL_2c,NAME,region,IYCC_M2,IYCC_M3,IYCC_M4,IYCC_R2,IYCC_R3,IYCC_R4,IYCC_W2,IYCC_W3,IYCC_W4)
 
 # Produce long version of the tables
 # Change from wide to long
 library(reshape2)
-IYCC_2c = melt(IYCC_2c, id.vars="region",na.rm=T)
+IYCC_2c = melt(IYCC_2c, id.vars=c("NAME","region"),na.rm=T)
 
 # split IYCC cols by CROP
 t1 = colsplit(IYCC_2c$variable,"_", c("IYCC","crop"))
@@ -190,22 +191,22 @@ save.image(file.path(wdrdata,"ALL_2c.RData"))
 
 
 # ---- ALL_4c (DAT_4c) ----
-rm(list=ls())
+rm(list = ls())
 
+# ---- ALL_4c (DAT_4c) ----
 # Used in graphics and in the Sup table: 1
 wdtables = "~/R/Pest-MS/tables/"
 wdrdata = "~/R/Pest-MS/RData/"
-setwd(wdrdata)
 
 # load Rdata 
-load("ALL_4c.RData") 
+load(file.path(wdrdata,"ALL_4c.RData")) 
 
 # prepare DF 
-DAT_4c = ALL_4c[,c("region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
+DAT_4c = ALL_4c[,c("NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
 
 # Change from wide to long
 library(reshape2)
-DAT_4c = melt(DAT_4c, id.vars="region",na.rm=T)
+DAT_4c = melt(DAT_4c, id.vars=c("NAME","region"),na.rm=T)
 
 # split cols by fact and crop
 t = colsplit(DAT_4c$variable,"_", c("fact","crop"))
@@ -236,15 +237,15 @@ rm(c1)
 # Sup 2:  Total yield and projected annual yield loss in 2050, across a full range of insect life-histories 
 
 # YIELD (tonnes) TOTAL PER CELL (YLD_TOT_x)
-TONNES_PRES = ALL_4c[,c("region","YLD_TOT_M","YLD_TOT_R","YLD_TOT_W")]
+TONNES_PRES = ALL_4c[,c("NAME","region","YLD_TOT_M","YLD_TOT_R","YLD_TOT_W")]
 
 # TOTAL TONNES LOST PER CELL DUE TO CLIMATE INDUCED CHANGES IN INSECT PESTS (CROP LOSS PER CELL- CL2050_xy)
-TONNES_4c = ALL_4c[,c("region","CL2050_M2","CL2050_M3","CL2050_M4","CL2050_R2","CL2050_R3","CL2050_R4","CL2050_W2","CL2050_W3","CL2050_W4")]
+TONNES_4c = ALL_4c[,c("NAME","region","CL2050_M2","CL2050_M3","CL2050_M4","CL2050_R2","CL2050_R3","CL2050_R4","CL2050_W2","CL2050_W3","CL2050_W4")]
 
 # Change from wide to long
 library(reshape2)
-TONNES_PRES = melt(TONNES_PRES, id.vars="region",na.rm=T)
-TONNES_4c = melt(TONNES_4c, id.vars="region",na.rm=T)
+TONNES_PRES = melt(TONNES_PRES, id.vars=c("NAME","region"),na.rm=T)
+TONNES_4c = melt(TONNES_4c, id.vars=c("NAME","region"),na.rm=T)
 
 # split PRES cols by CROP
 t1 = colsplit(TONNES_PRES$variable,"_", c("YIELD_TOT","crop"))
@@ -281,7 +282,7 @@ rm(c1)
 
 library(plyr)
 # Select relevant columns
-YLPH_4c = dplyr::select(ALL_4c,region,IPM_M2,IPM_M3,IPM_M4,IPM_R2,IPM_R3,IPM_R4,IPM_W2,IPM_W3,IPM_W4,CLF_M,CY_M,CA_M,CLF_R,CY_R,CA_R,CLF_W,CY_W,CA_W)
+YLPH_4c = dplyr::select(ALL_4c,NAME,region,IPM_M2,IPM_M3,IPM_M4,IPM_R2,IPM_R3,IPM_R4,IPM_W2,IPM_W3,IPM_W4,CLF_M,CY_M,CA_M,CLF_R,CY_R,CA_R,CLF_W,CY_W,CA_W)
 
 # Compute yield (tonnes) lost per ha
 YLPH_4c <- dplyr::mutate(YLPH_4c,
@@ -299,14 +300,14 @@ YLPH_4c <- dplyr::mutate(YLPH_4c,
 YLPH_4c = dplyr::select(YLPH_4c,-c(IPM_M2,IPM_M3,IPM_M4,IPM_R2,IPM_R3,IPM_R4,IPM_W2,IPM_W3,IPM_W4,CLF_M,CY_M,CA_M,CLF_R,CY_R,CA_R,CLF_W,CY_W,CA_W))
 
 # PRESENT yield
-YL_PRES = dplyr::select(ALL_4c,region,CY_M,CY_R,CY_W)
+YL_PRES = dplyr::select(ALL_4c,NAME,region,CY_M,CY_R,CY_W)
 
 
 # Produce long version of the tables
 # Change from wide to long
 library(reshape2)
-YL_PRES = melt(YL_PRES, id.vars="region",na.rm=T)
-YLPH_4c = melt(YLPH_4c, id.vars="region",na.rm=T)
+YL_PRES = melt(YL_PRES, id.vars=c("NAME","region"), na.rm=T)
+YLPH_4c = melt(YLPH_4c, id.vars=c("NAME","region"), na.rm=T)
 
 # split PRES cols by CROP
 t1 = colsplit(YL_PRES$variable,"_", c("CY","crop"))
@@ -341,12 +342,12 @@ rm(c1)
 
 library(plyr)
 # Select relevant columns
-IYCC_4c = dplyr::select(ALL_4c,region,IYCC_M2,IYCC_M3,IYCC_M4,IYCC_R2,IYCC_R3,IYCC_R4,IYCC_W2,IYCC_W3,IYCC_W4)
+IYCC_4c = dplyr::select(ALL_4c,NAME,region,IYCC_M2,IYCC_M3,IYCC_M4,IYCC_R2,IYCC_R3,IYCC_R4,IYCC_W2,IYCC_W3,IYCC_W4)
 
 # Produce long version of the tables
 # Change from wide to long
 library(reshape2)
-IYCC_4c = melt(IYCC_4c, id.vars="region",na.rm=T)
+IYCC_4c = melt(IYCC_4c, id.vars=c("NAME","region"),na.rm=T)
 
 # split IYCC cols by CROP
 t1 = colsplit(IYCC_4c$variable,"_", c("IYCC","crop"))

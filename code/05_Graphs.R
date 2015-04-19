@@ -7,7 +7,7 @@ wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
 wdtables = "~/R/Pest-MS/tables"
 wdrdata = "~/R/Pest-MS/RData/"
-wdfun = "~/R/Pest-MS/functions"
+wdfun = "~/R/Pest-MS/fun"
 
 # Load data
 setwd(wdrdata)

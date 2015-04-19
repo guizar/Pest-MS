@@ -5,7 +5,7 @@ rm(list=ls())
 wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
 wdtables = "~/R/Pest-MS/tables"
-wdfun = "~/R/Pest-MS/functions"
+wdfun = "~/R/Pest-MS/fun"
 wddata ="~/R/Pest-MS/data/"
 
 # functions
@@ -159,13 +159,6 @@ CGS_M<- rename.vars(CGS_M, c("V1","V2","V3","V4","V5"), c("LAT","LON","CGS_M","P
 CGS_R<- rename.vars(CGS_R, c("V1","V2","V3","V4","V5"), c("LAT","LON","CGS_R","PLT_R","HRVST_R"))
 CGS_W<- rename.vars(CGS_W, c("V1","V2","V3","V4","V5"), c("LAT","LON","CGS_W","PLT_W","HRVST_W"))
 
-# ////////// Comments //////////
-# JTT: I THINK THE CGS DATA ARE NOT CORRECT COMING IN. PLOT THEM...note, we do not expand the growing season with temp change in our model.
-
-# AG re(JJT): How should the CGS data look like? if you try summarizing CGS_x$CGS_x you will see no NA's, however both PLT_x and HRVST_x have a lot of NA's - what are these 2 last variables?
-# summary(CGS_M)
-# # ///////////////////////////
-
 # Rename MET
 MET_M2<- rename.vars(MET_M2, c("V1","V2","V3"), c("LAT","LON","MET_M2"))
 MET_M3<- rename.vars(MET_M3, c("V1","V2","V3"), c("LAT","LON","MET_M3"))
@@ -285,13 +278,45 @@ rm(NAMES)
 rm(QUERY)
 rm(NEIGHS)
 
-############################### CALCULATING CELL AREA
-ALL$AREA= ((6371^2)*abs((ALL$LON*pi/180)-((ALL$LON-0.1667)*pi/180))*abs(sin(ALL$LAT*pi/180)-sin((ALL$LAT-0.1667)*pi/180)))*100
-#This is in HA (note the multiplication by 100.)
+# --- 7) Calculate Grid area ----
+# Isolate LON LAT from ALL
+XY = ALL[,which(c("LON","LAT") %in% names(ALL))]
 
+# are XY coordinates UNIQUE in XY object?
+summary(unique(XY[,c(1,2)]) == XY[]) ## yes
+
+# convert XY to SPDF
+XY$v = 1
+coordinates(XY) = ~LON+LAT
+
+# rasterize XY
+library(raster)
+ras = raster() # 1 x 1 grid by default
+ras = rasterize(XY, ras, field = rep(1, nrow(XY)))
+
+# calculate area from raster object
+AREA = area(ras)
+AREA[coordinates(!is.na(ras)),] # prints area of non-NA cells
+
+# pass area values to the XY SPDF obj
+XY$AREA = extract(AREA,XY)
+
+# convert XY back to DF, test whether LON|LAT cols are IDENTICAL in both XY and ALL objects
+XY = as.data.frame(XY)
+colnames(XY) = c("LON","LAT","v","AREA")
+identical(XY[,c("LON","LAT")],ALL[,c("LON","LAT")]) # TRUE
+
+# pass area values from XY to ALL object. Since area() returns values in KM2, multiply by 100 to convert to HA
+ALL$AREA = XY$AREA * 100
+
+# remove unused
+rm(XY)
+rm(ras)
+rm(AREA)
+
+# ---- 8) Merge Country, region and subregion data ----
 rm(WorldPolyCountries)
 
-# ---- 7) Merge Country, region and subregion data ----
 # add counting column
 ALL$CELLS<-1
 
@@ -319,8 +344,6 @@ ALL$code[is.na(ALL$code)] = unique(ALL$code[ALL$NAME=="China"])
 # merge by UN code
 t = merge(ALL,data,by.x= "code",by.y = "un",all.x=T,sort=T)
 
-
-
 # are there any missing regions?
 summary(is.na(t$region)) # looks good to go
 unique(t$region)
@@ -329,7 +352,7 @@ unique(t$region)
 # t$country.name[t$NAME=="Taiwan"] ="Taiwan"
 
 # remove unused cols
-t = t[,-which(names(t) %in% c("cowc","cown","fao","fips104","imf","ioc","iso2c","iso3c","iso3n","un","wb","regex","code","country.name"))]
+t = t[,-which(names(t) %in% c("cowc","cown","fao","fips104","imf","ioc","iso2c","iso3c","iso3n","un","wb","regex","code"))]
 
 # restore and remove
 ALL = t
@@ -337,7 +360,7 @@ rm(t)
 rm(data)
 # ///////////////////
 
-# ---- 8) CREATING SUMMARY VARIABLES FOR GRAPHING ----
+# ---- 9) CREATING SUMMARY VARIABLES FOR GRAPHING ----
 ALL$MET_AVG2<-rowMeans(ALL[ ,c("MET_M2","MET_R2","MET_W2")],na.rm=TRUE)
 ALL$MET_AVG3<-rowMeans(ALL[ ,c("MET_M3","MET_R3","MET_W3")],na.rm=TRUE)
 ALL$MET_AVG4<-rowMeans(ALL[ ,c("MET_M4","MET_R4","MET_W4")],na.rm=TRUE)
@@ -350,7 +373,7 @@ ALL$IPM_AVG2<-rowMeans(ALL[ ,c("IPM_M2","IPM_R2","IPM_W2")],na.rm=TRUE)
 ALL$IPM_AVG3<-rowMeans(ALL[ ,c("IPM_M3","IPM_R3","IPM_W3")],na.rm=TRUE)
 ALL$IPM_AVG4<-rowMeans(ALL[ ,c("IPM_M4","IPM_R4","IPM_W4")],na.rm=TRUE)
 
-# ---- 9) CALCULATE other summary variables for graphs and tables ----
+# ---- 10) CALCULATE other summary variables for graphs and tables ----
 ########YIELD PER HA PLANTED (YLD_HA_x)
 ALL$YLD_HA_M<-ALL$CY_M/ALL$CA_M
 ALL$YLD_HA_R<-ALL$CY_R/ALL$CA_R
@@ -421,7 +444,7 @@ ALL$IYCC_W2<-ALL$IPM_W2*(ALL$CLF_W)
 ALL$IYCC_W3<-ALL$IPM_W3*(ALL$CLF_W)
 ALL$IYCC_W4<-ALL$IPM_W4*(ALL$CLF_W)
 
-# ---- 10) Bounce master CSV and save RData ----
+# ---- 11) Bounce master CSV and save RData ----
 # CUT ALL ROWS WITH NO LAT AND LONG
 summary(is.na(ALL$LAT))
 ALL<-subset(ALL,!is.na(ALL$LAT))
