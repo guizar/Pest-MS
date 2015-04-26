@@ -118,7 +118,7 @@ MAP = melt(MAP,id.vars = c("LON","LAT","crop"))
 
 # as factor
 MAP$crop = as.factor(MAP$crop)
-levels(MAP$crop) = c("Maize", "Rice", "Weat")
+levels(MAP$crop) = c("Maize", "Rice", "Wheat")
 
 # MAP$phi = as.factor(MAP$phi)
 # levels(MAP$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001")

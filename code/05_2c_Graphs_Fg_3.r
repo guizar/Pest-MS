@@ -18,7 +18,7 @@ wdfun = "~/R/Pest-MS/fun"
 load(file.path(wdrdata,"ALL_2c.RData"))
 
 # clean space
-source(file.path(wdfun,"clean_space.r")) 
+# source(file.path(wdfun,"clean_space.r")) 
 
 # load libraries used to produce ALL graphs
 library(reshape2)
@@ -115,7 +115,7 @@ fg = merge(fg,fgIPM,by = c("NAME","crop"))
 # factorize
 fg$range = as.factor(fg$range)
 fg$crop = as.factor(fg$crop)
-levels(fg$crop) = c("Maize", "Rice", "Weat") # rename
+levels(fg$crop) = c("Maize", "Rice", "Wheat") # rename
 fg$phi = as.factor(fg$phi)
 levels(fg$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001")
 
@@ -152,3 +152,5 @@ plotname = file.path(wdpng,paste("Figure 3 2c",".png",sep = ""))
 png(filename=plotname,width=14*ppi, height=10*ppi, res=ppi )
 p
 dev.off()
+
+rm(list = ls())

@@ -370,7 +370,7 @@ fg$brks = custom.cut(fg$value,by = 0.05,digits = 3)
 
 ### Change labels (for ggplot)
 fg$crop = as.factor(fg$crop)
-levels(fg$crop) = c("Maize", "Rice", "Weat") # rename
+levels(fg$crop) = c("Maize", "Rice", "Wheat") # rename
 
 fg$phi = as.factor(fg$phi)
 levels(fg$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001") # rename
@@ -440,7 +440,7 @@ fg = fg %>%
 
 ## Change labels (for ggplot)
 fg$crop = as.factor(fg$crop)
-levels(fg$crop) = c("Maize", "Rice", "Weat") # rename
+levels(fg$crop) = c("Maize", "Rice", "Wheat") # rename
 
 fg$phi = as.factor(fg$phi)
 levels(fg$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001") # rename
