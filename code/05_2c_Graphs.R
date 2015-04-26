@@ -9,8 +9,10 @@ wdrdata = "~/R/Pest-MS/RData/"
 wdfun = "~/R/Pest-MS/fun"
 
 # Load data
-setwd(wdrdata)
-load("ALL_2c.RData")
+load(file.path(wdrdata,"ALL_2c.RData"))
+
+# clean space
+source(file.path(wdfun,"clean_space.r")) 
 
 # load libraries used to produce ALL graphs
 library(reshape2)
@@ -55,7 +57,7 @@ source(file.path(wdfun,"basemap.r"))
 m1 = ggplot()  + geom_polygon(data=map,aes(x=long, y=lat,group=group), fill="gray", color="gray",size=0.2)
 m1 = m1 + geom_raster(data=fg,aes(fill=brks,x=LON, y=LAT),interpolate = T)
 m1 = m1 + scale_fill_manual(values =rev(cols(12)))
-m1 = m1 +  ggtitle("Fractional change in population metabolism")
+m1 = m1 + theme(title=element_blank())
 m1 = m1 + facet_grid(variable~.)
 m1 = m1 + guides(fill=guide_legend(title=NULL))
 m1 = m1 + theme(panel.grid = element_blank())
@@ -66,15 +68,11 @@ m1 = m1 %+% mygg
 m1
 
 # Save plot
-# ppi = 300
-# plotname = file.path(wdpng,paste("Figue 1A 2c",".png",sep = ""))
-# png(filename=plotname,width=9*ppi, height=15*ppi, res=ppi )
-# m1
-# dev.off()
-
-
-
-
+ppi = 300
+plotname = file.path(wdpng,paste("Figue 1A 2c",".png",sep = ""))
+png(filename=plotname,width=9*ppi, height=15*ppi, res=ppi )
+m1
+dev.off()
 
 # Fig 1b) Summary of fractional change (horizontal plot, phi3 in the middle) ----
 # Variables:
@@ -134,6 +132,7 @@ p = p + xlab(label = "") + ylab(label = "Fractional change")
 # horizontal lines
 p = p + geom_vline(xintercept=seq(0.5, length(unique(fg1b$region)), 1), lwd=0.2, colour="black")
 p = p + theme(panel.grid.major.y = element_blank())
+p = p + theme(title=element_blank())
 
 # scales
 labs = levels(fg1b$crop)
@@ -149,6 +148,8 @@ plotname = file.path(wdpng,paste("Figue 1B 2c",".png",sep = ""))
 png(filename=plotname,width=6*ppi, height=8*ppi, res=ppi )
 p
 dev.off()
+# ggsave(plotname,p,scale = 2,dpi=150)
+
 
 # Fig 1a) and 1b) combined ----
 
@@ -160,6 +161,7 @@ m1 = m1 + facet_grid(variable~.)
 m1 = m1 + guides(fill=guide_legend(title=NULL))
 m1 = m1 + theme(panel.grid = element_blank())
 m1 = m1 %+% mygg
+m1 = m1 + theme(title=element_blank())
 
 # remove unused stuff m1
 m1 = m1 + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.title = element_blank())
@@ -175,13 +177,14 @@ p = p + theme(legend.position="bottom")
 p = p + theme(strip.background = element_blank(), strip.text.x = element_blank(), strip.text.y = element_blank())
 
 # grid plot
-grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,2), height = c(1, 1),main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2)))
+grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,2), height = c(1, 1))
+# main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2))
 
 # Save plot
 ppi = 300
 plotname = file.path(wdpng,paste("Figure 1 2c",".png",sep = ""))
-png(filename=plotname,width=11*ppi, height=11*ppi, res=ppi )
-grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,1.5), height = c(1, 1),main = textGrob("Fractional change in population metabolism",gp=gpar(fontsize=20,font=2)))
+png(filename=plotname,width=11*ppi, height=10*ppi, res=ppi )
+grid.arrange(p,m1, ncol = 2, nrow = 1, widths = c(1,1.5), height = c(1, 1))
 dev.off()
 
 
@@ -189,10 +192,6 @@ dev.off()
 
 
 # --- Fig 2 (smooth): Globally integrated loss of crop yield  ----
-
-data = readMat(file.path(wddata,"MS_Fig2.mat"))
-
-#### Data composition
 # x2 = temp anomaly
 # y2 = yield loss
 #
@@ -201,6 +200,8 @@ data = readMat(file.path(wddata,"MS_Fig2.mat"))
 # [1:2] = Ph 0.01, Ph 0.0001
 # [1:100] =  Temporal anomaly
 ###
+
+data = readMat(file.path(wddata,"MS_Fig2.mat"))
 
 dfy = array2df(data$y)
 dfx = array2df(data$x)
@@ -221,9 +222,9 @@ dfXy$Crop[dfXy$Crop==1] ="Wheat"
 dfXy$Crop[dfXy$Crop==2] ="Rice"
 dfXy$Crop[dfXy$Crop==3] ="Maize"
 
-# PH
-dfXy$Phi[dfXy$Phi==1] ="Phi 2"
-dfXy$Phi[dfXy$Phi==2] ="Phi 4"
+# phi
+dfXy$Phi[dfXy$Phi==1] ="Phi 0.0001"
+dfXy$Phi[dfXy$Phi==2] ="Phi 0.01"
 
 # Rescale Y
 dfXy$y =  dfXy$y/1000000
@@ -244,7 +245,8 @@ p = p + facet_wrap(~Phi, ncol = 1) # (remove for plotly)
 # annotations
 ylab=expression(bold(Yield~loss~~"(Ton/yr)"*10^"6"))
 # ylab= "Yield loss (Ton/yr) *10^6" # (plotly)
-p = p + ggtitle("Globally integrated loss of crop yield") + xlab("Temp anomaly") + ylab(ylab)
+p = p + theme(title=element_blank())
+p = p + xlab("Temp anomaly") + ylab(ylab)
 
 ## Fixed Y 
 # p + scale_y_discrete(breaks=seq(0, max(dfXy$y), 3))
@@ -261,11 +263,9 @@ p
 # Save plot
 ppi = 300
 plotname = file.path(wdpng,paste("Figure 2 v1",".png",sep = ""))
-png(filename=plotname,width=5*ppi, height=8*ppi, res=ppi )
+png(filename=plotname,width=6*ppi, height=8*ppi, res=ppi )
 p
 dev.off()
-
-
 
 
 # --- Fig 2 (dotplot): Globally integrated loss of crop yield  ----
@@ -292,8 +292,8 @@ dfXy$Crop[dfXy$Crop==2] ="Rice"
 dfXy$Crop[dfXy$Crop==3] ="Maize"
 
 # PH
-dfXy$Phi[dfXy$Phi==1] ="Phi 2"
-dfXy$Phi[dfXy$Phi==2] ="Phi 4"
+dfXy$Phi[dfXy$Phi==1] ="Phi 0.0001"
+dfXy$Phi[dfXy$Phi==2] ="Phi 0.01"
 
 # Rescale Y
 dfXy$y =  dfXy$y/1000000
@@ -301,6 +301,8 @@ dfXy$y =  dfXy$y/1000000
 # change crop names
 dfXy$Crop = as.factor(dfXy$Crop )
 levels(dfXy$Crop) = c("Maize", "Rice", "Wheat")
+
+# PLOT
 p = ggplot(dfXy, aes(x=x, y=y, color=Crop, shape=Phi)) # (plotly)
 p = p + geom_jitter(alpha=0.5) #  (for plotly use geom_point)
 # no faceting remove for plotly
@@ -308,7 +310,9 @@ p = p + geom_jitter(alpha=0.5) #  (for plotly use geom_point)
 # annotations
 ylab=expression(bold(Yield~loss~~"(Ton/yr)"*10^"6"))
 # ylab= "Yield loss (Ton/yr) *10^6" # (plotly)
-p = p + ggtitle("Globally integrated loss of crop yield") + xlab("Temp anomaly") + ylab(ylab)
+# p = p + ggtitle("Globally integrated loss of crop yield") 
+p = p + theme(title = element_blank())
+p = p + xlab("Temp anomaly") + ylab(ylab)
 
 # scales
 labs = levels(dfXy$Crop)
@@ -316,12 +320,13 @@ p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=pa
 
 # theme
 p = p %+% mygg
+p = p + theme(legend.position="bottom")
 p
 
 # Save plot
 ppi = 300
 plotname = file.path(wdpng,paste("Figure 2 v2",".png",sep = ""))
-png(filename=plotname,width=7*ppi, height=7*ppi, res=ppi )
+png(filename=plotname,width=8*ppi, height=8*ppi, res=ppi )
 p
 dev.off()
 

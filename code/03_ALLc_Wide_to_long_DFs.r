@@ -50,7 +50,7 @@ rm(c1)
 # YIELD (tonnes) TOTAL PER CELL (YLD_TOT_x)
 TONNES_PRES = ALL_2c[,c("NAME","region","YLD_TOT_M","YLD_TOT_R","YLD_TOT_W")]
 
-# TOTAL TONNES LOST PER CELL DUE TO CLIMATE INDUCED CHANGES IN INSECT PESTS (CROP LOSS PER CELL- CL2050_xy)
+# TOTAL TONNES LOST PER CELL DUE TO CLIMATE INDUCED CHANGES IN INSECT PESTS (CROP LOSS PER CELL- CL2050_xy)  
 TONNES_2c = ALL_2c[,c("NAME","region","CL2050_M2","CL2050_M3","CL2050_M4","CL2050_R2","CL2050_R3","CL2050_R4","CL2050_W2","CL2050_W3","CL2050_W4")]
 
 # Change from wide to long
@@ -89,7 +89,7 @@ rm(c1)
 
 
 # ---- YLPH_2c----
-# Sup 3: Yield and yield loss (tones per ha) caused by climate change impacts on crop pests,  across a full range of insect life-histories 
+# Sup 3: Yield and yield loss (tonnes per ha) caused by climate change impacts on crop pests,  across a full range of insect life-histories 
 
 library(plyr)
 # Select relevant columns
@@ -278,7 +278,7 @@ rm(c1)
 
 
 # ---- YLPH_4c----
-# Sup 3: Yield and yield loss (tones per ha) caused by climate change impacts on crop pests,  across a full range of insect life-histories 
+# Sup 3: Yield and yield loss (tonnes per ha) caused by climate change impacts on crop pests,  across a full range of insect life-histories 
 
 library(plyr)
 # Select relevant columns

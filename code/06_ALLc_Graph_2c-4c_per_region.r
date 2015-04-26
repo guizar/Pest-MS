@@ -4,9 +4,8 @@
 ##### ---
 
 
-# Load data and initial variables ------
 
-rm(list = ls())
+# Load data and initial variables ------
 
 wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
@@ -16,12 +15,27 @@ wdrdata = "~/R/Pest-MS/RData/"
 wdfun = "~/R/Pest-MS/fun"
 
 # Load data
-setwd(wdrdata)
-load("ALL_2c.RData")
-load("ALL_4c.RData")
+load(file.path(wdrdata,"ALL_2c.RData"))
+load(file.path(wdrdata,"ALL_4c.RData"))
 
-library(plyr)
+# clean space
+source(file.path(wdfun,"clean_space.r")) 
+
+# load libraries used to produce ALL graphs
+library(reshape2)
+library(classInt)
+library(ggplot2)
 library(dplyr)
+library(gridExtra)
+library(R.matlab)
+library(arrayhelpers)
+library(plyr)
+
+# Load functions
+source(file.path(wdfun,"cols_gg.r")) 
+source(file.path(wdfun,"multiplots_gg.r"))
+source(file.path(wdfun,"custom_cut.r"))
+
 
 #--- REGIONAL IPM SUMMARY  ----
 SUM_2c = ddply(DAT_2c,c("fact","phi","region"),summarise,

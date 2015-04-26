@@ -1,6 +1,6 @@
 # Install missing packages before running the sequence of scripts
 
-list <- c("gdata","sp","FNN","countrycode","reshape2","plyr","dplyr","classInt","ggplot2","gridExtra","R.matlab","arrayhelpers","raster")
+list <- c("gdata","sp","FNN","countrycode","reshape2","plyr","dplyr","classInt","ggplot2","gridExtra","R.matlab","arrayhelpers","raster","tidyr")
 
 new.packages <- list[!(list %in% installed.packages()[,"Package"])]
 

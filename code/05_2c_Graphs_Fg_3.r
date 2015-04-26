@@ -2,17 +2,23 @@
 # Bubble graph: Predicted median increase in insect pest pressure on crops as a function of crop yield (median yield for each country), for A) Maize,  B) Rice, and C) Wheat
 # ///
 
+rm(list = ls())
+
+# --- _2c ---
 # Load data and initial variables ------
 
 wd = "~/R/Pest-MS/"
 wdpng = "~/R/Pest-MS/png"
 wdtables = "~/R/Pest-MS/tables"
+wddata = "~/R/Pest-MS/data/"
 wdrdata = "~/R/Pest-MS/RData/"
 wdfun = "~/R/Pest-MS/fun"
 
 # Load data
-setwd(wdrdata)
-load("ALL_2c.RData")
+load(file.path(wdrdata,"ALL_2c.RData"))
+
+# clean space
+source(file.path(wdfun,"clean_space.r")) 
 
 # load libraries used to produce ALL graphs
 library(reshape2)
@@ -75,7 +81,7 @@ fgHA = ddply(fgHA, c("NAME","crop"), summarise,
                           yld_ha= median(value,na.rm = T))
 
 
-#--- YL TOTAL TONNES (circle size)
+#--- YLD TOTAL (TONNES) (circle size)
 fgTONNES <- ddply(TONNES_PRES, c("NAME","crop"), summarise,
                                  tonnes= sum(value,na.rm = T))
 
@@ -83,37 +89,43 @@ fgTONNES <- ddply(TONNES_PRES, c("NAME","crop"), summarise,
 fgTONMAX <- ddply(fgTONNES, c("crop"), summarise,
                   max= sum(tonnes,na.rm = T))
 
-#--- IYCC (Y axis) ----
+#--- IPM (Y axis) ----
 # //////
 # QUESTION: by MEDIAN you are referring to median PHI2 or median across ALL PHIS? below i'm doing MEDIAN ALL
 # /////
 
-# summarize IYCC by "NAME","crop",
-fgIYCC <- ddply(IYCC_2c, c("NAME","crop"), summarise,
-                             iycc= median(value,na.rm = T))
+fgIPM = ddply(DAT_2c,c("fact","phi","NAME","crop"),summarise,
+               ipm= median(value,na.rm = T))
 
-fgIYCC$iycc = fgIYCC$iycc * 100
+fgIPM$ipm = fgIPM$ipm * 100
+
+# remove factors
+fgIPM = dplyr::filter(fgIPM,fact =="IPM")
+fgIPM = dplyr::select(fgIPM,-fact)
 
 # define distribution range (for outliers)
-wsk = boxplot.stats(fgIYCC$iycc)$stats
+wsk = boxplot.stats(fgIPM$ipm)$stats
+boxplot(fgIPM$ipm)
 
 #--- MERGE DATASETS ----
 fg = merge(fgLAT,fgHA,by = "NAME")
 fg = merge(fg,fgTONNES,by = c("NAME","crop"))
-fg = merge(fg,fgIYCC,by = c("NAME","crop"))
+fg = merge(fg,fgIPM,by = c("NAME","crop"))
 
 # factorize
 fg$range = as.factor(fg$range)
 fg$crop = as.factor(fg$crop)
 levels(fg$crop) = c("Maize", "Rice", "Weat") # rename
+fg$phi = as.factor(fg$phi)
+levels(fg$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001")
 
 # set breaks/labes for bubble sized
 brk = c(3000000,30000000,100000000,240000000)
 lab = c("3 Millions","30 Millions","100 Millions","240 Millions")
 
 #--- PLOT ----
-p = ggplot(subset(fg, iycc <= wsk[5] & iycc >= wsk[1]), # outliers out
-           aes(x = yld_ha, y = iycc)) 
+p = ggplot(subset(fg, ipm <= wsk[5] & ipm >= wsk[1]), # outliers out
+           aes(x = yld_ha, y = ipm)) 
 p = p + geom_point(aes(size = tonnes, colour = range),alpha=0.5)
 
 p = p + scale_size_area(breaks=brk, 
@@ -124,7 +136,7 @@ p = p + scale_size_area(breaks=brk,
 p = p + scale_color_brewer(palette="Set1", 
                       name="Mean absolute\nLatitude")
 
-p = p + facet_grid(.~crop)
+p = p + facet_grid(phi~crop)
 p = p + guides(colour = guide_legend(override.aes = list(size=8)))
 p = p + xlab("Median yield per hectare") + ylab("Increase in pest pressure (%)")
 p = p + xlim(c(0,10))
@@ -136,7 +148,7 @@ p
 
 # Save plot
 ppi = 300
-plotname = file.path(wdpng,paste("Bubble graph",".png",sep = ""))
-png(filename=plotname,width=14*ppi, height=8*ppi, res=ppi )
+plotname = file.path(wdpng,paste("Figure 3 2c",".png",sep = ""))
+png(filename=plotname,width=14*ppi, height=10*ppi, res=ppi )
 p
 dev.off()
