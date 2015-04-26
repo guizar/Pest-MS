@@ -22,24 +22,94 @@ load(file.path(wdrdata,"ALL_2c.RData"))
 load(file.path(wdrdata,"ALL_4c.RData"))
 
 # clean space
-source(file.path(wdfun,"clean_space.r")) 
+# source(file.path(wdfun,"clean_space.r")) 
 
+# libs
+library(ggplot2)
 library(plyr)
 library(dplyr)
 
+# functions
+source(file.path(wdfun,"cols_gg.r")) 
+source(file.path(wdfun,"multiplots_gg.r"))
+source(file.path(wdfun,"custom_cut.r"))
+
+# ---- RECALCULATE ALL_2c (DAT_2c) WITH LON LAT VALUES ----
+# prepare DF 
+DAT_2c = ALL_2c[,c("LON","LAT","NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
+
+# Change from wide to long
+library(reshape2)
+DAT_2c = melt(DAT_2c, id.vars=c("LON","LAT","NAME","region"),na.rm=T)
+
+# split cols by fact and crop
+t = colsplit(DAT_2c$variable,"_", c("fact","crop"))
+c2 = colsplit(t$crop,"[0-9]", c("crop","phi")) ## gives you the crop name initials
+t = colsplit(DAT_2c$variable,"_", c("fact","crop"))
+c1 = colsplit(t$crop,"[A-Z]", c("crop","phi")) ## gives you the phi values
+
+# join new columns and delete unused 
+c1$crop = c2$crop
+t$crop = c1$crop
+t$phi = c1$phi
+
+DAT_2c = DAT_2c[,-which(names(DAT_2c) %in% "variable")]
+DAT_2c$crop = t$crop
+DAT_2c$phi = t$phi
+DAT_2c$fact = t$fact
+
+rm(t)
+rm(c2)
+rm(c1)
+
 # --- EXPLORE OUTLIERS ----
-stats.IPM = boxplot.stats(DAT_2c$value[DAT_2c$fact=="IPM"])
-length.IPM = length(DAT_2c$value[DAT_2c$fact=="IPM"])
+IPM_2c_ALL = dplyr::filter(DAT_2c,fact=="IPM")
+stats.IPM = boxplot.stats(IPM_2c_ALL$value)
+length.IPM = length(IPM_2c_ALL$value)
 length.IPM.out = length(stats.IPM$out)
 percent.out = length.IPM.out / length.IPM
 print(percent.out * 100)
 
-boxplot(DAT_2c$value[DAT_2c$fact=="IPM"],main = "IPM Boxplot")
+boxplot(IPM_2c_ALL$value,main = "IPM Boxplot")
 
-rm(stats.IPM)
-rm(length.IPM)
-rm(length.IPM.out)
-rm(percent.out)
+# rm(stats.IPM)
+# rm(length.IPM)
+# rm(length.IPM.out)
+# rm(percent.out)
+
+# --- MAP OUTLIERS AND SAVE CSV----
+IPM_2c_OUT = IPM_2c_ALL[IPM_2c_ALL$value  %in% stats.IPM$out,]
+
+# generate basemap
+source(file.path(wdfun,"basemap.r"))
+
+## plot
+m1 = ggplot()  + geom_polygon(data=map,aes(x=long, y=lat,group=group), fill="gray", color="gray",size=0.2)
+m1 = m1 + geom_raster(data=IPM_2c_OUT,aes(fill=value,x=LON, y=LAT),interpolate = T)
+m1 = m1 + scale_fill_gradientn(colours = rev(cols(12)))
+m1 = m1 + theme(title=element_blank())
+m1 = m1 + ggtitle("IPM Outliers")
+m1
+
+# Save plot
+ppi = 300
+plotname = file.path(wdpng,paste("IPM Outliers",".png",sep = ""))
+png(filename=plotname,width=10*ppi, height=8*ppi, res=ppi )
+m1
+dev.off()
+
+# Density curve
+p = ggplot(IPM_2c_OUT, aes(x=value)) + geom_histogram(binwidth = 50)
+p = p + ggtitle("IPM Histogram")
+
+ppi = 150
+plotname = file.path(wdpng,paste("IPM Histogram",".png",sep = ""))
+png(filename=plotname,width=10*ppi, height=8*ppi, res=ppi )
+p
+dev.off()
+
+# write csv 
+write.csv(IPM_2c_OUT, file.path(wdtables,"IPM_OUTLIERS.csv"),row.names=FALSE)
 
 
 # --- REMOVE IPM OUTLIERS FROM MASTER TABLES ----

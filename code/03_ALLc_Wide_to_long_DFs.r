@@ -187,10 +187,6 @@ save.image(file.path(wdrdata,"ALL_2c.RData"))
 
 
 
-
-
-
-# ---- ALL_4c (DAT_4c) ----
 rm(list = ls())
 
 # ---- ALL_4c (DAT_4c) ----
