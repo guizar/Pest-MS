@@ -110,7 +110,8 @@ dev.off()
 
 # write csv 
 write.csv(IPM_2c_OUT, file.path(wdtables,"IPM_OUTLIERS.csv"),row.names=FALSE)
-
+IPM_2c_HIGH0<- subset(IPM_2c_OUT,value>1)
+write.csv(IPM_2c_HIGH0, file.path(wdtables,"IPM_HIGH_OUT_2c.csv"),row.names=FALSE)
 
 # --- REMOVE IPM OUTLIERS FROM MASTER TABLES ----
 DAT_2c = ddply(DAT_2c,c("fact","phi","crop"), function(d){
