@@ -13,7 +13,7 @@ wdrdata = "~/R/Pest-MS/RData/"
 load(file.path(wdrdata,"ALL_2c.RData")) 
 
 # prepare DF 
-DAT_2c = ALL_2c[,c("NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4","IPM_AVG2","IPM_AVG3","IPM_AVG4")]
+DAT_2c = ALL_2c[,c("NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
 
 # Change from wide to long
 library(reshape2)
@@ -194,11 +194,12 @@ rm(list = ls())
 wdtables = "~/R/Pest-MS/tables/"
 wdrdata = "~/R/Pest-MS/RData/"
 
+
 # load Rdata 
 load(file.path(wdrdata,"ALL_4c.RData")) 
 
 # prepare DF 
-DAT_4c = ALL_4c[,c("NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4","IPM_AVG2","IPM_AVG3","IPM_AVG4")]
+DAT_4c = ALL_4c[,c("NAME","region","MET_M2","MET_R2","MET_W2","MET_M3","MET_R3","MET_W3","MET_M4","MET_R4","MET_W4","POP_M2","POP_R2","POP_W2","POP_M3","POP_R3","POP_W3","POP_M4","POP_R4","POP_W4","IPM_M2","IPM_R2","IPM_W2","IPM_M3","IPM_R3","IPM_W3","IPM_M4","IPM_R4","IPM_W4")]
 
 # Change from wide to long
 library(reshape2)
