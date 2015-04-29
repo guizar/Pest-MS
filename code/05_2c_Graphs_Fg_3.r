@@ -37,7 +37,7 @@ source(file.path(wdfun,"custom_cut.r"))
 
 # options(scipen=5)
 
-#--- Mean absolute latitude (COLORS) ----
+#--- 1) Mean absolute latitude (COLORS) ----
 fgLAT = dplyr::select(ALL_2c, one_of("LAT","NAME"))   # data XY
 fgLAT = fgLAT %>%
   group_by(NAME) %>% 
@@ -63,7 +63,7 @@ fgLAT = transform(fgLAT, range = cut(LAT,breaks = brk,labels = lab))
 fgLAT$range[is.na(fgLAT$range)] = lab[1]
   
 
-#--- TOTAL Y HA (X-axis) ----
+#--- 2) Total Y HA (X-axis) ----
 fgHA = dplyr::select(ALL_2c, one_of("YLD_HA_M","YLD_HA_R","YLD_HA_W","NAME")) 
 
 # Change from wide to long
@@ -81,21 +81,21 @@ fgHA = ddply(fgHA, c("NAME","crop"), summarise,
                           yld_ha= median(value,na.rm = T))
 
 
-#--- YLD TOTAL (TONNES) (circle size) ----
+#--- 3) Calculate total tonnes (circle size) ----
 fgTONNES <- ddply(TONNES_PRES, c("NAME","crop"), summarise,
                                  tonnes= sum(value,na.rm = T))
 
-# top yielding countries per crop
-TOP_YLD <- ddply(fgTONNES, c("crop","NAME"), summarise,
-                  total= sum(tonnes,na.rm = T))
+# top yielding countries per crop (no longer needed)
+# TOP_YLD <- ddply(fgTONNES, c("crop","NAME"), summarise,
+#                   total= sum(tonnes,na.rm = T))
+# 
+# TOP_YLD  = TOP_YLD %>% 
+#   group_by(crop) %>%
+#   arrange(.,desc(total)) %>%
+#   top_n(., 5, total)
 
-TOP_YLD  = TOP_YLD %>% 
-  group_by(crop) %>%
-  arrange(.,desc(total)) %>%
-  top_n(., 5, total)
 
-
-#--- IPM (Y axis) ----
+#--- 4) Select IPM values (Y axis) ----
 fgIPM = ddply(DAT_2c,c("fact","phi","NAME","crop"),summarise,
                ipm= median(value,na.rm = T))
 
@@ -109,33 +109,32 @@ fgIPM = dplyr::select(fgIPM,-fact)
 # wsk = boxplot.stats(fgIPM$ipm)$stats
 # boxplot(fgIPM$ipm)
 
-#--- MERGE DATASETS ----
+#--- 5) Merge datasets ----
 fg = merge(fgLAT,fgHA,by = "NAME")
 fg = merge(fg,fgTONNES,by = c("NAME","crop"))
 fg = merge(fg,fgIPM,by = c("NAME","crop"))
 
 
-# --- [in process ] add a label to top yielding countries per crop ----
-IND_LAB = which(fg$crop %in% TOP_YLD$crop & fg$NAME %in% TOP_YLD$NAME) # need to find a way to select just 15 rows
+# --- Add a label to top 5 yielding countries per crop ----
+TOP_YLD  = fg %>% 
+  group_by(phi,crop) %>%
+  arrange(.,desc(tonnes)) %>%
+  top_n(., 5, tonnes)
+
+IND_LAB = which(fg$tonnes %in% TOP_YLD$tonnes) 
 fg$label = ""
 fg$label[IND_LAB] = as.character(fg$NAME[IND_LAB])
 
-# fg$label = ""
-# t  = fg %>% 
-#   group_by(phi,crop) %>%
-#   arrange(.,desc(tonnes)) %>%
-#   top_n(., 5, tonnes) %>%
-#   mutate(label = NAME)
-  # need to put labels back to the original fg
+rm(IND_LAB)
 
-# --- factorize ----
+# --- Rename variables ----
 fg$range = as.factor(fg$range)
 fg$crop = as.factor(fg$crop)
 levels(fg$crop) = c("Maize", "Rice", "Wheat") # rename
 fg$phi = as.factor(fg$phi)
 levels(fg$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001")
 
-# set breaks/labes for bubble sized
+# set breaks/labes for bubble size
 brk = c(3000000,30000000,100000000,240000000)
 lab = c("3 Millions","30 Millions","100 Millions","240 Millions")
  
