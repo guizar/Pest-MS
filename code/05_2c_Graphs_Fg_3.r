@@ -81,19 +81,21 @@ fgHA = ddply(fgHA, c("NAME","crop"), summarise,
                           yld_ha= median(value,na.rm = T))
 
 
-#--- YLD TOTAL (TONNES) (circle size)
+#--- YLD TOTAL (TONNES) (circle size) ----
 fgTONNES <- ddply(TONNES_PRES, c("NAME","crop"), summarise,
                                  tonnes= sum(value,na.rm = T))
 
-# max per crop
-fgTONMAX <- ddply(fgTONNES, c("crop"), summarise,
-                  max= sum(tonnes,na.rm = T))
+# top yielding countries per crop
+TOP_YLD <- ddply(fgTONNES, c("crop","NAME"), summarise,
+                  total= sum(tonnes,na.rm = T))
+
+TOP_YLD  = TOP_YLD %>% 
+  group_by(crop) %>%
+  arrange(.,desc(total)) %>%
+  top_n(., 5, total)
+
 
 #--- IPM (Y axis) ----
-# //////
-# QUESTION: by MEDIAN you are referring to median PHI2 or median across ALL PHIS? below i'm doing MEDIAN ALL
-# /////
-
 fgIPM = ddply(DAT_2c,c("fact","phi","NAME","crop"),summarise,
                ipm= median(value,na.rm = T))
 
@@ -104,15 +106,29 @@ fgIPM = dplyr::filter(fgIPM,fact =="IPM")
 fgIPM = dplyr::select(fgIPM,-fact)
 
 # define distribution range (for outliers)
-wsk = boxplot.stats(fgIPM$ipm)$stats
-boxplot(fgIPM$ipm)
+# wsk = boxplot.stats(fgIPM$ipm)$stats
+# boxplot(fgIPM$ipm)
 
 #--- MERGE DATASETS ----
 fg = merge(fgLAT,fgHA,by = "NAME")
 fg = merge(fg,fgTONNES,by = c("NAME","crop"))
 fg = merge(fg,fgIPM,by = c("NAME","crop"))
 
-# factorize
+
+# --- [in process ] add a label to top yielding countries per crop ----
+IND_LAB = which(fg$crop %in% TOP_YLD$crop & fg$NAME %in% TOP_YLD$NAME) # need to find a way to select just 15 rows
+fg$label = ""
+fg$label[IND_LAB] = as.character(fg$NAME[IND_LAB])
+
+# fg$label = ""
+# t  = fg %>% 
+#   group_by(phi,crop) %>%
+#   arrange(.,desc(tonnes)) %>%
+#   top_n(., 5, tonnes) %>%
+#   mutate(label = NAME)
+  # need to put labels back to the original fg
+
+# --- factorize ----
 fg$range = as.factor(fg$range)
 fg$crop = as.factor(fg$crop)
 levels(fg$crop) = c("Maize", "Rice", "Wheat") # rename
@@ -122,10 +138,14 @@ levels(fg$phi) = c("Phi 0.01", "Phi 0.001", "Phi 0.0001")
 # set breaks/labes for bubble sized
 brk = c(3000000,30000000,100000000,240000000)
 lab = c("3 Millions","30 Millions","100 Millions","240 Millions")
+ 
 
 #--- PLOT ----
-p = ggplot(subset(fg, ipm <= wsk[5] & ipm >= wsk[1]), # outliers out
-           aes(x = yld_ha, y = ipm)) 
+# p = ggplot(subset(fg, ipm <= wsk[5] & ipm >= wsk[1]), # outliers out
+#           aes(x = yld_ha, y = ipm)) 
+
+p = ggplot(fg, aes(x = yld_ha, y = ipm)) # all IPM data included
+
 p = p + geom_point(aes(size = tonnes, colour = range),alpha=0.5)
 
 p = p + scale_size_area(breaks=brk, 
@@ -140,8 +160,13 @@ p = p + facet_grid(phi~crop)
 p = p + guides(colour = guide_legend(override.aes = list(size=8)))
 p = p + xlab("Median yield per hectare") + ylab("Increase in pest pressure (%)")
 p = p + xlim(c(0,10))
-p = p + geom_text(data=subset(fg, tonnes>50000000), aes(label=NAME), size=4)
 
+# p = p + geom_text(data=subset(fg,NAME %in% TOP_YLD$NAME), aes(label=NAME), size=4) # naming T0P 20 COUNTRIES
+
+p = p +ylim(c(0,60)) # fixed y-axis
+
+p = p + geom_text(aes(label=label), size=4)
+p
 # update theme
 p = p %+% mygg
 p
