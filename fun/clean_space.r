@@ -1,7 +1,7 @@
 # Clean space =  leabe only ALL_ and DAT_objects
 
 rm(list = ls()[
-  -which(ls() %in% c(ls(pattern ="ALL_"),ls(pattern ="DAT_")))])
+  -which(ls() %in% c(ls(pattern ="^ALL_"),ls(pattern ="^DAT_")))])
 
 # restore paths
 wd = "~/R/Pest-MS/"

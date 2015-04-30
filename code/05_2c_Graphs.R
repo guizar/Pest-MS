@@ -191,7 +191,7 @@ dev.off()
 
 
 
-# --- Fig 2 (smooth): Globally integrated loss of crop yield  ----
+# --- Fig 2 (v1): Globally integrated loss of crop yield  ----
 # x2 = temp anomaly
 # y2 = yield loss
 #
@@ -253,7 +253,7 @@ p = p + xlab("Temp anomaly") + ylab(ylab)
 
 # scales
 labs = levels(dfXy$Crop)
-p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=palcrop)
+p = p + scale_color_manual(name = "Crop", labels = labs, breaks=labs, values=palcrop)
 
 # theme
 p = p %+% mygg
@@ -268,7 +268,7 @@ p
 dev.off()
 
 
-# --- Fig 2 (dotplot): Globally integrated loss of crop yield  ----
+# --- Fig 2 (v2): Globally integrated loss of crop yield  ----
 
 data = readMat(file.path(wddata,"MS_Fig2.mat"))
 
@@ -316,7 +316,7 @@ p = p + xlab("Temp anomaly") + ylab(ylab)
 
 # scales
 labs = levels(dfXy$Crop)
-p = p + scale_color_manual(name = "Crops", labels = labs, breaks=labs, values=palcrop)
+p = p + scale_color_manual(name = "Crop", labels = labs, breaks=labs, values=palcrop)
 
 # theme
 p = p %+% mygg
@@ -327,6 +327,85 @@ p
 ppi = 300
 plotname = file.path(wdpng,paste("Figure 2 v2",".png",sep = ""))
 png(filename=plotname,width=8*ppi, height=8*ppi, res=ppi )
+p
+dev.off()
+
+
+# --- Fig 2 (v3): Globally integrated loss of crop yield  ----
+# x2 = temp anomaly
+# y2 = yield loss
+#
+# [1:4] = GFDL, MPI, IPSL, Hadley
+# [1:3] = Wheat, Rice, Maize
+# [1:2] = Ph 0.01, Ph 0.0001
+# [1:100] =  Temporal anomaly
+###
+
+data = readMat(file.path(wddata,"MS_Fig2.mat"))
+
+dfy = array2df(data$y)
+dfx = array2df(data$x)
+dfx = dfx[c("d1","d2","d3","data$x")]
+dfXy = cbind(dfx,dfy$"data$y") 
+
+colnames(dfXy) = c("Model","Crop","Phi","x","y") 
+
+# Change values
+# MODELS
+dfXy$Model[dfXy$Model==1] ="GFDL"
+dfXy$Model[dfXy$Model==2] ="MPI"
+dfXy$Model[dfXy$Model==3] ="IPSL"
+dfXy$Model[dfXy$Model==4] ="Hadley"
+
+# CROPS
+dfXy$Crop[dfXy$Crop==1] ="Wheat"
+dfXy$Crop[dfXy$Crop==2] ="Rice"
+dfXy$Crop[dfXy$Crop==3] ="Maize"
+
+# phi
+dfXy$Phi[dfXy$Phi==1] ="Phi 0.0001"
+dfXy$Phi[dfXy$Phi==2] ="Phi 0.01"
+
+# Rescale Y
+dfXy$y =  dfXy$y/1000000
+
+# change crop names
+dfXy$Crop = as.factor(dfXy$Crop )
+levels(dfXy$Crop) = c("Maize", "Rice", "Wheat")
+
+library (ggplot2)
+
+# PLOT
+p = ggplot(dfXy, aes(x=x, y=y, color=Crop, shape=Model)) 
+# p = ggplot(dfXy, aes(x=x, y=y, color=Crop, shape=Phi)) # (plotly)
+p = p + geom_point()
+p = p + geom_smooth(method=lm, size= 1) 
+# p = p + geom_point() #  (plotly)
+p = p + facet_wrap(~Phi, ncol = 1) # (remove for plotly)
+# p + geom_ribbon(alpha=0.2)
+# annotations
+ylab=expression(bold(Yield~loss~~"(Ton/yr)"*10^"6"))
+# ylab= "Yield loss (Ton/yr) *10^6" # (plotly)
+p = p + theme(title=element_blank())
+p = p + xlab("Temp anomaly") + ylab(ylab)
+
+
+## Fixed Y 
+# p + scale_y_discrete(breaks=seq(0, max(dfXy$y), 3))
+
+# scales
+labs = levels(dfXy$Crop)
+p = p + scale_color_manual(name = "Crop", labels = labs, breaks=labs, values=palcrop)
+
+# theme
+p = p %+% mygg
+p = p + theme(legend.position="bottom")
+p
+
+# Save plot
+ppi = 300
+plotname = file.path(wdpng,paste("Figure 2 v3",".png",sep = ""))
+png(filename=plotname,width=6*ppi, height=8*ppi, res=ppi )
 p
 dev.off()
 
