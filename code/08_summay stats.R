@@ -96,7 +96,7 @@ save(list = ls()[which(ls() %in% c(ls(pattern ="^DAT_4csum"),
      file = file.path(wdrdata,"DAT_summaries.RData"))
 
 # --- 3) Load DAT sum objects----
-load(file.path(wdrdata,"DAT_summaries.RData")) 
+# load(file.path(wdrdata,"DAT_summaries.RData")) 
 
 # --- 4) National yield quantiles per crop
 load(file.path(wdrdata,"ALL_2c.RData")) 
@@ -111,6 +111,7 @@ rm(list = ls()[
 
 TONNES = ddply(TONNES_PRES, c("NAME","crop"), summarise,
                   tonnes= sum(value,na.rm = T))
+
 
 # --- Total yield by country ----
 YLD_COUNTRY_STATS =  TONNES %>% 
