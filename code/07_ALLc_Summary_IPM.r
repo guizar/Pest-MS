@@ -244,7 +244,7 @@ png(filename=plotname,width=10*ppi, height=8*ppi, res=ppi )
 m1
 dev.off()
 
-# Density curve
+# Histogram
 p = ggplot(IPM_2c_OUT, aes(x=value)) + geom_histogram(binwidth = 50)
 p = p + ggtitle("IPM Histogram")
 
